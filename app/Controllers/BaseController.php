@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Exceptions\HttpInvalidInputException;
 
 abstract class BaseController
 {
+    public string $resource_name;
+    public function __construct()
+    {
+        $class_name = basename(get_class($this)); #basename: without the file path
+        $this->resource_name = substr(strtolower((str_replace('Controller', '', $class_name))), 0, -1); #formats resource name
+        $this->correctResourceName(); # corrects it if necessary
+    }
+
     protected function makeResponse(Response $response, array $data, int $status_code = 200): Response
     {
         // var_dump($data);
@@ -16,5 +24,27 @@ abstract class BaseController
         //-- Write JSON data into the response's body.        
         $response->getBody()->write($json_data);
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
+    }
+    protected function assertIdFormat($request, $id, $pattern): void
+    {
+        if (preg_match($pattern, $id) === 0) {
+            throw new HttpInvalidInputException(
+                $request,
+                "Unable to process the request: invalid $this->resource_name id format"
+            );
+        }
+    }
+    protected function assertIdExists($request, $data): void
+    {
+        if (!$data[$this->resource_name]) {
+            throw new HttpInvalidInputException(
+                $request,
+                "The supplied $this->resource_name id is not valid!"
+            );
+        }
+    }
+    private function correctResourceName(): void
+    {
+        $this->resource_name = $this->resource_name === 'matche' ? 'match' : $this->resource_name;
     }
 }

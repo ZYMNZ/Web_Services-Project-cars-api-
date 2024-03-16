@@ -331,6 +331,9 @@ nbdist/
 # *.iml
 # *.ipr
 
+#JetClient
+.jetclient
+
 # CMake
 cmake-build-*/
 

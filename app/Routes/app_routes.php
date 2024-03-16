@@ -6,6 +6,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\InsurancesController;
+use Vanier\Api\Controllers\OwnersController;
+use Vanier\Api\Controllers\ViolationsController;
 use Vanier\Api\Helpers\DateTimeHelper;
 
 // Import the app instance into this file's scope.
@@ -17,6 +20,16 @@ global $app;
 
 //* ROUTE: GET /
 $app->get('/', [AboutController::class, 'handleAboutWebService']);
+
+//* ROUTE: GET /owners
+$app->get('/owners', [OwnersController::class, 'handleGetAllOwners']);
+$app->get('/owners/{owner_id}', [OwnersController::class, 'handleGetOwnerInfo']);
+
+//* ROUTE: GET /violations
+$app->get('/violations', [ViolationsController::class, 'handleAllViolations']);
+
+//* ROUTE: GET /insurances
+$app->get('/insurances', [InsurancesController::class, 'handleAllInsurances']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
