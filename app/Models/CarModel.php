@@ -22,10 +22,13 @@ class CarModel extends BaseModel
             $sql .= " AND year = :year";
             $filters_values['year'] = $filters['year'];
         }
-//        if (isset($filters['is_fuel_economic'])) {
-//            $sql .= " AND is_fuel_economic CONCAT(:is_fuel_economic,'%')";
-//            $filters_values['is_fuel_economic'] = $filters['is_fuel_economic'];
-//        }
+        if (isset($filters['is_fuel_economic'])) {
+            if($filters['is_fuel_economic'] == 'true'){
+                $sql .= " AND is_fuel_economic = 1";
+            }else if($filters['is_fuel_economic'] == 'false'){
+                $sql .= " AND is_fuel_economic = 0";
+            }
+        }
         if (isset($filters['car_make'])) {
             $sql .= " AND car_make CONCAT(:car_make,'%')";
             $filters_values['car_make'] = $filters['car_make'];
