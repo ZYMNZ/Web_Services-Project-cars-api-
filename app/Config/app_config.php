@@ -5,7 +5,7 @@ declare(strict_types=1);
 // Constants for MySQL database configuration/credentials.
 //TODO: change the following values if you have different settings/options.
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'cars');
+define('DB_NAME', 'cars_data');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_CHAR', 'utf8mb4');
