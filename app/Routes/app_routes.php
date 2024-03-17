@@ -6,9 +6,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Vanier\Api\Controllers\AboutController;
-use Vanier\Api\Controllers\InsurancesController;
-use Vanier\Api\Controllers\OwnersController;
-use Vanier\Api\Controllers\ViolationsController;
+use Vanier\Api\Controllers\CarController;
+use Vanier\Api\Controllers\DealController;
+use Vanier\Api\Controllers\InsuranceController;
+use Vanier\Api\Controllers\OwnerController;
+use Vanier\Api\Controllers\ViolationController;
 use Vanier\Api\Helpers\DateTimeHelper;
 
 // Import the app instance into this file's scope.
@@ -21,15 +23,21 @@ global $app;
 //* ROUTE: GET /
 $app->get('/', [AboutController::class, 'handleAboutWebService']);
 
+//* ROUTE: GET /cars
+$app->get('/cars', [CarController::class, 'handleGetAllCars']);
+
+//* ROUTE: GET /deals
+$app->get('/deals', [DealController::class, 'handleGetAllDeals']);
+
 //* ROUTE: GET /owners
-$app->get('/owners', [OwnersController::class, 'handleGetAllOwners']);
-$app->get('/owners/{owner_id}', [OwnersController::class, 'handleGetOwnerInfo']);
+$app->get('/owners', [OwnerController::class, 'handleGetAllOwners']);
+$app->get('/owners/{owner_id}', [OwnerController::class, 'handleGetOwnerInfo']);
 
 //* ROUTE: GET /violations
-$app->get('/violations', [ViolationsController::class, 'handleAllViolations']);
+$app->get('/violations', [ViolationController::class, 'handleAllViolations']);
 
 //* ROUTE: GET /insurances
-$app->get('/insurances', [InsurancesController::class, 'handleAllInsurances']);
+$app->get('/insurances', [InsuranceController::class, 'handleAllInsurances']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
