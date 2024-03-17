@@ -13,7 +13,7 @@ class ViolationsController extends BaseController
     public function __construct() {
         parent::__construct();
         $this->violations_model = new ViolationsModel();
-        $this->pattern = "not done";
+        $this->pattern = "/^V-\d{5}$/";
     }
     public function handleAllViolations(Request $request, Response $response, array $uri_args): Response {
         $filters = $request->getQueryParams();

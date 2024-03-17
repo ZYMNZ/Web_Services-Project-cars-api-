@@ -13,7 +13,7 @@ class InsurancesController extends BaseController
     public function __construct() {
         parent::__construct();
         $this->insurancesModel = new InsurancesModel();
-        $this->pattern = "Not done";
+        $this->pattern = "/^I-\d{5}$/";
     }
     public function handleAllInsurances(Request $request, Response $response, array $uri_args): Response {
         $filters = $request->getQueryParams();
