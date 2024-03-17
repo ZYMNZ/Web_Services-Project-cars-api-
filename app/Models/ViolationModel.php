@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Models;
 
-class ViolationsModel extends BaseModel
+class ViolationModel extends BaseModel
 {
 
     public function getAllViolations(array $filters): array

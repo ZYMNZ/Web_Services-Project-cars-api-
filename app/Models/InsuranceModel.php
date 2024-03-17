@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Models;
 
-class InsurancesModel extends BaseModel
+class InsuranceModel extends BaseModel
 {
     public function getAllInsurances(array $filters): array
     {

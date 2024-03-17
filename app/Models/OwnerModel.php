@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Models;
 
-class OwnersModel extends BaseModel
+class OwnerModel extends BaseModel
 {
 
     public function __construct()
