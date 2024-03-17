@@ -14,7 +14,7 @@ class OwnersController extends BaseController
     {
         parent::__construct();
         $this->owners_model = new OwnersModel();
-        $this->pattern = "not done";
+        $this->pattern = "/^O-\d{5}$/";
     }
 
     public function handleGetAllOwners(Request $request, Response $response, array $uri_args): Response {
