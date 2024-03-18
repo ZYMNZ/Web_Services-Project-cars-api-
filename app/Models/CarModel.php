@@ -30,16 +30,22 @@ class CarModel extends BaseModel
             }
         }
         if (isset($filters['car_make'])) {
-            $sql .= " AND car_make CONCAT(:car_make,'%')";
+            $sql .= " AND car_make LIKE CONCAT(:car_make,'%')";
             $filters_values['car_make'] = $filters['car_make'];
         }
         if (isset($filters['car_model'])) {
-            $sql .= " AND car_model CONCAT(:car_model,'%')";
+            $sql .= " AND car_model LIKE CONCAT(:car_model,'%')";
             $filters_values['car_model'] = $filters['car_model'];
         }
 
 
         $sql .= " ORDER BY car_id " . $this->sortingOrder($filters);
         return ['cars' => $this->paginate($sql, $filters_values)];
+    }
+
+    public function getCarById($car_id)
+    {
+        $sql = "SELECT * FROM cars WHERE car_id = :car_id";
+        return $this->fetchSingle($sql, ['car_id' => $car_id]);
     }
 }
