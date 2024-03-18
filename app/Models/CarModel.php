@@ -24,17 +24,17 @@ class CarModel extends BaseModel
         }
         if (isset($filters['is_fuel_economic'])) {
             if($filters['is_fuel_economic'] == 'true'){
-                $sql .= " AND is_fuel_economic = 1";
+                $sql .= " AND is_fuel_economic = true";
             }else if($filters['is_fuel_economic'] == 'false'){
                 $sql .= " AND is_fuel_economic = 0";
             }
         }
         if (isset($filters['car_make'])) {
-            $sql .= " AND car_make CONCAT(:car_make,'%')";
+            $sql .= " AND car_make LIKE CONCAT(:car_make,'%')";
             $filters_values['car_make'] = $filters['car_make'];
         }
         if (isset($filters['car_model'])) {
-            $sql .= " AND car_model CONCAT(:car_model,'%')";
+            $sql .= " AND car_model LIKE CONCAT(:car_model,'%')";
             $filters_values['car_model'] = $filters['car_model'];
         }
 
