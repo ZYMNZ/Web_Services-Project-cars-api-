@@ -43,10 +43,10 @@ class CarModel extends BaseModel
         return ['cars' => $this->paginate($sql, $filters_values)];
     }
 
-    public function getCarById($car_id) : mixed
+    public function getCarById($car_id) : array
     {
         $sql = "SELECT * FROM cars WHERE car_id = :car_id";
-        return $this->fetchSingle($sql, ['car_id' => $car_id]);
+        return (array)$this->fetchSingle($sql, ['car_id' => $car_id]);
     }
 
     public function getCarEmissions($car_id,$filters) : array
@@ -54,7 +54,7 @@ class CarModel extends BaseModel
         $result = [];
         $filters_values = [];
 
-        $result['car'] = $this->getCarById($car_id);
+        $this->getCarById($car_id);
 
         $sql = "SELECT * FROM emissions e, cars c WHERE c.emission_id = e.emission_id AND car_id = :car_id";
         if(isset($filters['vehicle_class'])){
