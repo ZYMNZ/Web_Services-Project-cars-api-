@@ -32,4 +32,34 @@ class OwnerController extends BaseController
         $this->assertIdExists($request, $data);
         return $this->makeResponse($response, $data);
     }
+    public function handleGetOwnerCars(Request $request, Response $response, array $uri_args): Response
+    {
+        $owner_id = $uri_args['owner_id'];
+        $this->assertIdFormat($request, $owner_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->owner_model->validatePagination($request, $filters);
+        $data = $this->owner_model->getOwnerCars($owner_id, $filters);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
+    public function handleGetOwnerDeals(Request $request, Response $response, array $uri_args): Response
+    {
+        $owner_id = $uri_args['owner_id'];
+        $this->assertIdFormat($request, $owner_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->owner_model->validatePagination($request, $filters);
+        $data = $this->owner_model->getOwnerDeals($owner_id, $filters);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
+    public function handleGetOwnerViolations(Request $request, Response $response, array $uri_args): Response
+    {
+        $owner_id = $uri_args['owner_id'];
+        $this->assertIdFormat($request, $owner_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->owner_model->validatePagination($request, $filters);
+        $data = $this->owner_model->getOwnerViolations($owner_id, $filters);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
 }

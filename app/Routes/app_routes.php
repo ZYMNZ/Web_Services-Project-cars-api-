@@ -32,12 +32,19 @@ $app->get('/deals', [DealController::class, 'handleGetAllDeals']);
 //* ROUTE: GET /owners
 $app->get('/owners', [OwnerController::class, 'handleGetAllOwners']);
 $app->get('/owners/{owner_id}', [OwnerController::class, 'handleGetOwnerInfo']);
+$app->get('/owners/{owner_id}/cars', [OwnerController::class, 'handleGetOwnerCars']);
+$app->get('/owners/{owner_id}/deals', [OwnerController::class, 'handleGetOwnerDeals']);
+$app->get('/owners/{owner_id}/violations', [OwnerController::class, 'handleGetOwnerViolations']);
 
 //* ROUTE: GET /violations
 $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
+$app->get('/violations/{violation_id}', [ViolationController::class, 'handleGetViolationInfo']);
+$app->get('/violations/{violation_id}/cars', [ViolationController::class, 'handleGetViolationCars']);
 
 //* ROUTE: GET /insurances
 $app->get('/insurances', [InsuranceController::class, 'handleAllInsurances']);
+$app->get('/insurances/{insurance_id}', [InsuranceController::class, 'handleGetInsuranceInfo']);
+$app->get('/insurances/{insurance_id}/owners', [InsuranceController::class, 'handleGetInsuranceOwners']);
 
 //* ROUTE: GET /emissions
 
