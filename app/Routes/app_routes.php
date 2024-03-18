@@ -39,6 +39,11 @@ $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
 //* ROUTE: GET /insurances
 $app->get('/insurances', [InsuranceController::class, 'handleAllInsurances']);
 
+//* ROUTE: GET /emissions
+
+
+//* ROUTE: GET /consumption
+
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
