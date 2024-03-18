@@ -54,7 +54,7 @@ class CarModel extends BaseModel
         $result = [];
         $filters_values = [];
 
-        $this->getCarById($car_id);
+        $result = $this->getCarById($car_id);
 
         $sql = "SELECT * FROM emissions e, cars c WHERE c.emission_id = e.emission_id AND car_id = :car_id";
         if(isset($filters['vehicle_class'])){
@@ -77,7 +77,7 @@ class CarModel extends BaseModel
         $result = [];
         $filters_values = [];
 
-        $this->getCarById($car_id);
+        $result = $this->getCarById($car_id);
 
         $sql = "SELECT * FROM deals d, cars c WHERE c.deal_id = d.deal_id AND car_id = :car_id";
 
@@ -101,7 +101,7 @@ class CarModel extends BaseModel
         $result = [];
         $filters_values = [];
 
-        $this->getCarById($car_id);
+        $result = $this->getCarById($car_id);
 
         $sql = "SELECT * FROM consumptions c, cars c WHERE c.consumption_id = c.consumption_id AND car_id = :car_id";
 

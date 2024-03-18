@@ -62,7 +62,7 @@ class DealModel extends BaseModel
         $result = [];
         $filters_values = [];
 
-        $this->getDealById($deal_id);
+        $result = $this->getDealById($deal_id);
 
         $sql = "SELECT * FROM deals d, cars c,owners o, insurances i 
          WHERE d.deal_id = c.deal_id 
