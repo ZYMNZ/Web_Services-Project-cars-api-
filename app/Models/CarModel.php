@@ -24,7 +24,7 @@ class CarModel extends BaseModel
         }
         if (isset($filters['is_fuel_economic'])) {
             if($filters['is_fuel_economic'] == 'true'){
-                $sql .= " AND is_fuel_economic = 1";
+                $sql .= " AND is_fuel_economic = true";
             }else if($filters['is_fuel_economic'] == 'false'){
                 $sql .= " AND is_fuel_economic = 0";
             }

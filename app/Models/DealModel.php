@@ -39,11 +39,11 @@ class DealModel extends BaseModel
             $filters_values['max_km_driven'] = $filters['max_km_driven'];
         }
         if (isset($filters['fuel_type'])) {
-            $sql .= " AND fuel_type CONCAT(:fuel_type, '%')";
+            $sql .= " AND fuel_type LIKE CONCAT(:fuel_type, '%')";
             $filters_values['fuel_type'] = $filters['fuel_type'];
         }
         if (isset($filters['transmission_type'])) {
-            $sql .= " AND transmission CONCAT(:transmission_type, '%')";
+            $sql .= " AND transmission LIKE CONCAT(:transmission_type, '%')";
             $filters_values['transmission_type'] = $filters['transmission_type'];
         }
 
