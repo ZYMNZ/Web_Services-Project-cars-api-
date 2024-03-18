@@ -54,7 +54,7 @@ class DealModel extends BaseModel
     public function getDealById($deal_id) : array
     {
         $sql = "SELECT * FROM deals WHERE deal_id = :deal_id";
-        return (array)$this->fetchSingle($sql, ['deal_id' => $deal_id]);
+        return ['deal' => $this->fetchSingle($sql, ['deal_id' => $deal_id])];
     }
 
     public function getDealInsurances($deal_id) : array

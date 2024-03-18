@@ -46,7 +46,7 @@ class CarModel extends BaseModel
     public function getCarById($car_id) : array
     {
         $sql = "SELECT * FROM cars WHERE car_id = :car_id";
-        return (array)$this->fetchSingle($sql, ['car_id' => $car_id]);
+        return ['car' => $this->fetchSingle($sql, ['car_id' => $car_id])];
     }
 
     public function getCarEmissions($car_id,$filters) : array
