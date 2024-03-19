@@ -7,7 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\CarController;
+use Vanier\Api\Controllers\ConsumptionController;
 use Vanier\Api\Controllers\DealController;
+use Vanier\Api\Controllers\EmissionController;
 use Vanier\Api\Controllers\InsuranceController;
 use Vanier\Api\Controllers\OwnerController;
 use Vanier\Api\Controllers\ViolationController;
@@ -38,6 +40,12 @@ $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
 
 //* ROUTE: GET /insurances
 $app->get('/insurances', [InsuranceController::class, 'handleAllInsurances']);
+
+//* ROUTE: GET /emissions
+$app->get('/emissions', [EmissionController::class, 'handleAllEmissions']);
+
+//* ROUTE: GET /consumption
+$app->get('/consumption', [ConsumptionController::class, 'handleAllConsumptions']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
