@@ -21,4 +21,23 @@ class InsuranceController extends BaseController
         $data = $this->insurance_model->getAllInsurances($filters);
         return $this->makeResponse($response, $data);
     }
+    public function handleGetInsuranceInfo(Request $request, Response $response, array $uri_args): Response {
+        $insurance_id = $uri_args['insurance_id'];
+        $this->assertIdFormat($request, $insurance_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->insurance_model->validatePagination($request, $filters);
+        $data = $this->insurance_model->getInsuranceInfo($insurance_id);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
+    public function handleGetInsuranceOwners(Request $request, Response $response, array $uri_args): Response
+    {
+        $insurance_id = $uri_args['insurance_id'];
+        $this->assertIdFormat($request, $insurance_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->insurance_model->validatePagination($request, $filters);
+        $data = $this->insurance_model->getInsuranceOwners($insurance_id, $filters);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
 }

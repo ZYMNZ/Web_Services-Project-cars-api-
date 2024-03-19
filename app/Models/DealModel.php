@@ -39,15 +39,48 @@ class DealModel extends BaseModel
             $filters_values['max_km_driven'] = $filters['max_km_driven'];
         }
         if (isset($filters['fuel_type'])) {
-            $sql .= " AND fuel_type CONCAT(:fuel_type, '%')";
+            $sql .= " AND fuel_type LIKE CONCAT(:fuel_type, '%')";
             $filters_values['fuel_type'] = $filters['fuel_type'];
         }
         if (isset($filters['transmission_type'])) {
-            $sql .= " AND transmission CONCAT(:transmission_type, '%')";
+            $sql .= " AND transmission LIKE CONCAT(:transmission_type, '%')";
             $filters_values['transmission_type'] = $filters['transmission_type'];
         }
 
         $sql .= " ORDER BY deal_id " . $this->sortingOrder($filters);
         return ['deals' => $this->paginate($sql, $filters_values)];
+    }
+
+    public function getDealById($deal_id) : array
+    {
+        $sql = "SELECT * FROM deals WHERE deal_id = :deal_id";
+        return ['deal' => $this->fetchSingle($sql, ['deal_id' => $deal_id])];
+    }
+
+    public function getDealInsurances($deal_id) : array
+    {
+        $result = [];
+        $filters_values = [];
+
+        $result = $this->getDealById($deal_id);
+
+        $sql = "SELECT * FROM deals d, cars c,owners o, insurances i 
+         WHERE d.deal_id = c.deal_id 
+           AND c.owner_id = o.owner_id 
+           AND o.insurance_id = i.insurance_id 
+           AND d.deal_id = :deal_id";
+        if(isset($filters['min_price'])){
+            $sql .= " AND price > :min_price";
+            $filters_values['min_price'] = $filters['min_price'];
+        }
+        if(isset($filters['max_price'])){
+            $sql .= " AND price < :max_price";
+            $filters_values['max_price'] = $filters['max_price'];
+        }
+        $sql .= " ORDER BY i.insurance_id " . $this->sortingOrder($filters);
+        $merged_filters = array_merge($filters_values, ['deal_id' => $deal_id]);
+        $result['insurances'] = $this->paginate($sql, $merged_filters);
+        return $result;
+
     }
 }

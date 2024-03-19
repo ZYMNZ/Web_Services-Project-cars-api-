@@ -27,19 +27,43 @@ $app->get('/', [AboutController::class, 'handleAboutWebService']);
 
 //* ROUTE: GET /cars
 $app->get('/cars', [CarController::class, 'handleGetAllCars']);
+//* ROUTE: GET /cars/{car_id}
+$app->get('/cars/{car_id}', [CarController::class, 'handleGetCarById']);
+//* ROUTE: GET /cars/{car_id}/emissions
+$app->get('/cars/{car_id}/emissions', [CarController::class, 'handleGetCarEmissions']);
+//* ROUTE: GET /cars/{car_id}/deals
+$app->get('/cars/{car_id}/deals', [CarController::class, 'handleGetCarDeals']);
+//* ROUTE: GET /cars/{car_id}/consumptions
+$app->get('/cars/{car_id}/consumptions', [CarController::class, 'handleGetCarConsumptions']);
 
 //* ROUTE: GET /deals
 $app->get('/deals', [DealController::class, 'handleGetAllDeals']);
+//* ROUTE: GET /deals/{deal_id}
+$app->get('/deals/{deal_id}', [DealController::class, 'handleGetDealById']);
+//* ROUTE: GET /deals/{deal_id}/insurances
+$app->get('/deals/{deal_id}/insurances', [DealController::class, 'handleGetDealInsurances']);
 
 //* ROUTE: GET /owners
 $app->get('/owners', [OwnerController::class, 'handleGetAllOwners']);
 $app->get('/owners/{owner_id}', [OwnerController::class, 'handleGetOwnerInfo']);
+$app->get('/owners/{owner_id}/cars', [OwnerController::class, 'handleGetOwnerCars']);
+$app->get('/owners/{owner_id}/deals', [OwnerController::class, 'handleGetOwnerDeals']);
+$app->get('/owners/{owner_id}/violations', [OwnerController::class, 'handleGetOwnerViolations']);
 
 //* ROUTE: GET /violations
 $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
+$app->get('/violations/{violation_id}', [ViolationController::class, 'handleGetViolationInfo']);
+$app->get('/violations/{violation_id}/cars', [ViolationController::class, 'handleGetViolationCars']);
 
 //* ROUTE: GET /insurances
 $app->get('/insurances', [InsuranceController::class, 'handleAllInsurances']);
+$app->get('/insurances/{insurance_id}', [InsuranceController::class, 'handleGetInsuranceInfo']);
+$app->get('/insurances/{insurance_id}/owners', [InsuranceController::class, 'handleGetInsuranceOwners']);
+
+//* ROUTE: GET /emissions
+
+
+//* ROUTE: GET /consumption
 
 //* ROUTE: GET /emissions
 $app->get('/emissions', [EmissionController::class, 'handleAllEmissions']);

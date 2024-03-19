@@ -20,4 +20,22 @@ class DealController extends BaseController
         $data = $this->deal_model->getAllDeals($filters);
         return $this->makeResponse($response, $data);
     }
+
+    public function handleGetDealById(Request $request, Response $response, array $uri_args): Response {
+        $deal_id = $uri_args['deal_id'];
+        $this->assertIdFormat($request,$deal_id, $this->pattern);
+        $data = $this->deal_model->getDealById($deal_id);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
+
+    public function handleGetDealInsurances(Request $request, Response $response, array $uri_args): Response {
+        $deal_id = $uri_args['deal_id'];
+        $this->assertIdFormat($request,$deal_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->deal_model->validatePagination($request, $filters);
+        $data = $this->deal_model->getDealInsurances($deal_id);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
+    }
 }

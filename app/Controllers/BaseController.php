@@ -13,7 +13,7 @@ abstract class BaseController
     public function __construct()
     {
         $class_name = basename(get_class($this)); #basename: without the file path
-        $this->resource_name = substr(strtolower((str_replace('Controller', '', $class_name))), 0, -1); #formats resource name
+        $this->resource_name = strtolower((str_replace('Controller', '', $class_name))); #formats resource name
         $this->correctResourceName(); # corrects it if necessary
     }
 
