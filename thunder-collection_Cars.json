@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Cars",
-    "dateExported": "2024-03-20T04:03:06.944Z",
+    "dateExported": "2024-03-20T12:51:18.127Z",
     "version": "1.1",
     "folders": [
         {
@@ -17,6 +17,41 @@
             "containerId": "",
             "created": "2024-03-20T03:43:02.898Z",
             "sortNum": 20000
+        },
+        {
+            "_id": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "owners",
+            "containerId": "",
+            "created": "2024-03-20T12:19:34.361Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "459c9ad5-70fb-4a16-8167-59e079417a83",
+            "name": "insurances",
+            "containerId": "",
+            "created": "2024-03-20T12:20:05.529Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "d39adc7f-4155-46d0-8a17-43663d8f76d6",
+            "name": "violations",
+            "containerId": "",
+            "created": "2024-03-20T12:20:19.288Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "288184fc-85c0-4a95-be1b-4e97be1f2cdf",
+            "name": "emissions",
+            "containerId": "",
+            "created": "2024-03-20T12:31:51.776Z",
+            "sortNum": 80000
+        },
+        {
+            "_id": "370c329c-a5df-481b-a63c-7d8e5f6b1af5",
+            "name": "consumptions",
+            "containerId": "",
+            "created": "2024-03-20T12:32:13.933Z",
+            "sortNum": 90000
         }
     ],
     "requests": [
@@ -90,17 +125,39 @@
             "tests": []
         },
         {
+            "_id": "9adec4eb-282d-41a8-82a8-c1e9ef3578cd",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "459c9ad5-70fb-4a16-8167-59e079417a83",
+            "name": "/insurances",
+            "url": "localhost/cars-api/insurances",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-03-20T12:33:25.227Z",
+            "modified": "2024-03-20T12:40:32.872Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
             "_id": "8316a28d-5059-435e-98eb-dcc1f3da11aa",
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
             "name": "cars/{car_id}",
-            "url": "localhost/cars-api/cars/C-00003",
+            "url": "localhost/cars-api/cars/{car_id}",
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-03-20T03:08:36.500Z",
-            "modified": "2024-03-20T03:08:56.608Z",
+            "modified": "2024-03-20T12:50:53.800Z",
             "headers": [],
-            "params": [],
+            "params": [
+                {
+                    "name": "car_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
             "tests": []
         },
         {
@@ -108,13 +165,18 @@
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
             "name": "cars/{car_id}/emissions",
-            "url": "localhost/cars-api/cars/C-00001/emissions",
+            "url": "localhost/cars-api/cars/{car_id}/emissions",
             "method": "GET",
             "sortNum": 40000,
             "created": "2024-03-20T03:13:26.394Z",
-            "modified": "2024-03-20T03:27:00.098Z",
+            "modified": "2024-03-20T12:51:02.992Z",
             "headers": [],
             "params": [
+                {
+                    "name": "car_id",
+                    "value": "",
+                    "isPath": true
+                },
                 {
                     "name": "vehicle_class",
                     "value": "s",
@@ -134,6 +196,7 @@
                     "isPath": false
                 }
             ],
+            "reqType": "get",
             "tests": []
         },
         {
@@ -141,13 +204,18 @@
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
             "name": "cars/{car_id}/deals",
-            "url": "localhost/cars-api/cars/C-00001/deals",
+            "url": "localhost/cars-api/cars/{car_id}/deals",
             "method": "GET",
             "sortNum": 50000,
             "created": "2024-03-20T03:27:31.825Z",
-            "modified": "2024-03-20T03:29:08.484Z",
+            "modified": "2024-03-20T12:51:08.226Z",
             "headers": [],
             "params": [
+                {
+                    "name": "car_id",
+                    "value": "",
+                    "isPath": true
+                },
                 {
                     "name": "page",
                     "value": "2",
@@ -179,6 +247,7 @@
                     "isPath": false
                 }
             ],
+            "reqType": "get",
             "tests": []
         },
         {
@@ -186,13 +255,18 @@
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
             "name": "cars/{car_id}/consumptions",
-            "url": "localhost/cars-api/cars/C-00001/consumptions",
+            "url": "localhost/cars-api/cars/{car_id}/consumptions",
             "method": "GET",
             "sortNum": 60000,
             "created": "2024-03-20T03:30:08.731Z",
-            "modified": "2024-03-20T03:42:48.467Z",
+            "modified": "2024-03-20T12:51:13.259Z",
             "headers": [],
             "params": [
+                {
+                    "name": "car_id",
+                    "value": "",
+                    "isPath": true
+                },
                 {
                     "name": "page",
                     "value": "1",
@@ -312,13 +386,20 @@
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
             "name": "/deals/{deal_id}",
-            "url": "localhost/cars-api/deals/D-00001",
+            "url": "localhost/cars-api/deals/{deal_id}",
             "method": "GET",
             "sortNum": 80000,
             "created": "2024-03-20T03:47:45.428Z",
-            "modified": "2024-03-20T03:48:05.726Z",
+            "modified": "2024-03-20T12:50:31.968Z",
             "headers": [],
-            "params": [],
+            "params": [
+                {
+                    "name": "deal_id",
+                    "value": "D-00001",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
             "tests": []
         },
         {
@@ -326,13 +407,18 @@
             "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
             "containerId": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
             "name": "/deals/{deal_id}/insurances",
-            "url": "localhost/cars-api/deals/D-00002/insurances",
+            "url": "localhost/cars-api/deals/{deal_id}/insurances",
             "method": "GET",
             "sortNum": 90000,
             "created": "2024-03-20T03:48:45.679Z",
-            "modified": "2024-03-20T03:59:21.730Z",
+            "modified": "2024-03-20T12:50:38.672Z",
             "headers": [],
             "params": [
+                {
+                    "name": "deal_id",
+                    "value": "",
+                    "isPath": true
+                },
                 {
                     "name": "page_size",
                     "value": "15",
@@ -362,6 +448,273 @@
                     "value": "desc",
                     "isDisabled": true,
                     "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "dd786b9c-7e7a-4796-8943-6caf564572a6",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "/owners",
+            "url": "localhost/cars-api/owners",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2024-03-20T12:32:54.716Z",
+            "modified": "2024-03-20T12:38:58.162Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "90ae2b14-0b49-4840-9ff0-fcdae2c6bd79",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "/owners/{owner_id}",
+            "url": "localhost/cars-api/owners/{owner_id}",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-03-20T12:33:16.747Z",
+            "modified": "2024-03-20T12:49:27.880Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "owner_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "3531222b-e182-4a1b-8f72-1fe8eae25728",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "459c9ad5-70fb-4a16-8167-59e079417a83",
+            "name": "/inaurances/{insurance_id}",
+            "url": "localhost/cars-api/insurances/{insurance_id}",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-03-20T12:34:06.139Z",
+            "modified": "2024-03-20T12:49:04.238Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "insurance_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "2ef8432f-fc81-4af6-989f-35ce187f6ea8",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "/owners/{owner_id}/cars",
+            "url": "localhost/cars-api/owners/{owner_id}/cars",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2024-03-20T12:38:24.193Z",
+            "modified": "2024-03-20T12:49:34.539Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "owner_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "b4f173b2-07b2-45d2-b796-5aa60ee593f4",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "/owners/{owner_id}/deals",
+            "url": "localhost/cars-api/owners/{owner_id}/deals",
+            "method": "GET",
+            "sortNum": 160000,
+            "created": "2024-03-20T12:38:32.431Z",
+            "modified": "2024-03-20T12:49:39.405Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "owner_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "50a82677-2779-40dd-8d03-fcaef63f6ad9",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "628041ad-613e-4e99-9677-79f12946f1c4",
+            "name": "/owners/{owner_id}/violations",
+            "url": "localhost/cars-api/owners/{owner_id}/violations",
+            "method": "GET",
+            "sortNum": 170000,
+            "created": "2024-03-20T12:38:39.728Z",
+            "modified": "2024-03-20T12:49:46.088Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "owner_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "573775e4-2416-4ce3-bc81-14f24baf1e64",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "459c9ad5-70fb-4a16-8167-59e079417a83",
+            "name": "/insurances/{insurance_id}/owners",
+            "url": "localhost/cars-api/insurances/{insurance_id}/owners",
+            "method": "GET",
+            "sortNum": 180000,
+            "created": "2024-03-20T12:40:59.564Z",
+            "modified": "2024-03-20T12:49:10.135Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "insurance_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "9353c589-ff33-459f-9f19-16ed49f2948b",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d39adc7f-4155-46d0-8a17-43663d8f76d6",
+            "name": "/violations",
+            "url": "localhost/cars-api/violations",
+            "method": "GET",
+            "sortNum": 190000,
+            "created": "2024-03-20T12:41:40.026Z",
+            "modified": "2024-03-20T12:43:18.326Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "dfd8caeb-360b-4667-aaff-532cf7e6a764",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d39adc7f-4155-46d0-8a17-43663d8f76d6",
+            "name": "/violations/{violation_id}",
+            "url": "localhost/cars-api/violations/{violation_id}",
+            "method": "GET",
+            "sortNum": 210000,
+            "created": "2024-03-20T12:41:59.466Z",
+            "modified": "2024-03-20T12:48:34.190Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "violation_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "4e6b95d1-2119-4290-a357-a8bfa4a25b21",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d39adc7f-4155-46d0-8a17-43663d8f76d6",
+            "name": "/violations/{violation_id}/cars",
+            "url": "localhost/cars-api/violations/{violation_id}/cars",
+            "method": "GET",
+            "sortNum": 220000,
+            "created": "2024-03-20T12:42:06.154Z",
+            "modified": "2024-03-20T12:48:43.630Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "violation_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "2de3906b-cfb8-4489-9ccd-fcf998ffaf5e",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "288184fc-85c0-4a95-be1b-4e97be1f2cdf",
+            "name": "/emissions",
+            "url": "localhost/cars-api/emissions",
+            "method": "GET",
+            "sortNum": 230000,
+            "created": "2024-03-20T12:43:58.233Z",
+            "modified": "2024-03-20T12:45:27.179Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a15bb8a2-ac21-496f-b882-0e6004ea5f3e",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "288184fc-85c0-4a95-be1b-4e97be1f2cdf",
+            "name": "/emissions/{emission_id}",
+            "url": "localhost/cars-api/emissions/{emission_id}",
+            "method": "GET",
+            "sortNum": 240000,
+            "created": "2024-03-20T12:44:41.465Z",
+            "modified": "2024-03-20T12:45:59.695Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "emission_id",
+                    "value": "",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "d6ca44ee-36ce-4045-a922-be1df58db21c",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "370c329c-a5df-481b-a63c-7d8e5f6b1af5",
+            "name": "/consumptions",
+            "url": "localhost/cars-api/consumptions",
+            "method": "GET",
+            "sortNum": 250000,
+            "created": "2024-03-20T12:46:21.097Z",
+            "modified": "2024-03-20T12:46:31.884Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "13172c7a-9c31-4a4d-879e-67879dcfeed9",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "370c329c-a5df-481b-a63c-7d8e5f6b1af5",
+            "name": "/consumptions/{consumption_id}",
+            "url": "localhost/cars-api/consumptions/{consumption_id}",
+            "method": "GET",
+            "sortNum": 260000,
+            "created": "2024-03-20T12:46:59.288Z",
+            "modified": "2024-03-20T12:48:04.110Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "consumption_id",
+                    "value": "",
+                    "isPath": true
                 }
             ],
             "tests": []
