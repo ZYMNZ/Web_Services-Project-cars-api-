@@ -9,11 +9,10 @@ class OwnerModel extends BaseModel
     {
         parent::__construct();
     }
-    public function getAllOwners(array $filters): array
+    public function getAllOwners(array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM owners WHERE 1";
 
-        $filters_values = [];
         if (isset($filters['name'])) {
             $sql .= " AND name LIKE CONCAT(:name,'%')";
             $filters_values['name'] = $filters['name'];
@@ -53,30 +52,64 @@ class OwnerModel extends BaseModel
         return ['owner' => $this->fetchSingle($sql, ['owner_id' => $owner_id])];
     }
 
-    public function getOwnerCars(mixed $owner_id, array $filters): array
+    public function getOwnerCars(mixed $owner_id, array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM
             owners o, cars c
         WHERE o.owner_id = c.owner_id
           AND o.owner_id = :owner_id";
-
-        $filter_values = [];
-        if (isset($filters['tournament_id'])) {
-            $sql.= " AND g.tournament_id = :tournament_id";
-            $filter_values["tournament_id"] = $filters['tournament_id'];
+        
+        if (isset($filters['horsepower'])) {
+            $sql.= " AND c.horsepower >= :horsepower";
+            $filters_values["horsepower"] = $filters['horsepower'];
         }
-        if (isset($filters['match_id'])) {
-            $sql.= " AND g.match_id = :match_id";
-            $filter_values["match_id"] = $filters['match_id'];
+        if (isset($filters['year'])) {
+            $sql.= " AND c.year = :year";
+            $filters_values["year"] = $filters['year'];
+        }
+        if (isset($filters['car_make'])) {
+            $sql.= " AND c.car_make LIKE CONCAT(:car_make,'%')";
+            $filters_values["car_make"] = $filters['car_make'];
+        }
+        if (isset($filters['car_model'])) {
+            $sql.= " AND c.car_model LIKE CONCAT(:car_model,'%')";
+            $filters_values["car_model"] = $filters['car_model'];
+        }
+        if (isset($filters['is_fuel_economic'])) {
+            $sql.= " AND c.is_fuel_economic = :is_fuel_economic";
+            $filters_values["is_fuel_economic"] = $filters['is_fuel_economic'];
         }
 
         $result = $this->getOwnerInfo($owner_id);
         $sql .= " ORDER BY o.owner_id" . $this->sortingOrder($filters);
-        $result['cars'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filter_values]);
+        $result['cars'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filters_values]);
         return $result;
     }
 
-    public function getOwnerViolations(string $owner_id, array $filters): array
+    public function getOwnerDeals(string $owner_id, array $filters, array $filters_values = []): array
+    {
+        $sql = "SELECT * FROM
+            owners o, cars c, deals d
+        WHERE o.owner_id = c.owner_id
+          AND c.deal_id = d.deal_id
+          AND o.owner_id = :owner_id";
+
+        if (isset($filters['selling_price'])) {
+            $sql.= " AND d.selling_price >= :selling_price";
+            $filters_values["selling_price"] = $filters['selling_price'];
+        }
+        if (isset($filters['km_driven'])) {
+            $sql.= " AND d.km_driven >= :km_driven";
+            $filters_values["km_driven"] = $filters['km_driven'];
+        }
+
+        $result = $this->getOwnerInfo($owner_id);
+        $sql .= " ORDER BY o.owner_id" . $this->sortingOrder($filters);
+        $result['deals'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filters_values]);
+        return $result;
+    }
+
+    public function getOwnerViolations(string $owner_id, array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM
              owners o, cars c, violations_cars vc, violations v
@@ -85,43 +118,34 @@ class OwnerModel extends BaseModel
           AND vc.violation_id = v.violation_id
           AND o.owner_id = :owner_id";
 
-        $filter_values = [];
-        if (isset($filters['tournament_id'])) {
-            $sql.= " AND g.tournament_id = :tournament_id";
-            $filter_values["tournament_id"] = $filters['tournament_id'];
+        if (isset($filters['location'])) {
+            $sql.= " AND v.location LIKE CONCAT(:location,'%')";
+            $filters_values["location"] = $filters['location'];
         }
-        if (isset($filters['match_id'])) {
-            $sql.= " AND g.match_id = :match_id";
-            $filter_values["match_id"] = $filters['match_id'];
+        if (isset($filters['violation_type'])) {
+            $sql.= " AND v.violation_type = :violation_type";
+            $filters_values["violation_type"] = $filters['violation_type'];
         }
-
-        $result = $this->getOwnerInfo($owner_id);
-        $sql .= " ORDER BY o.owner_id" . $this->sortingOrder($filters);
-        $result['violations'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filter_values]);
-        return $result;
-    }
-
-    public function getOwnerDeals(string $owner_id, array $filters): array
-    {
-        $sql = "SELECT * FROM
-            owners o, cars c, deals d
-        WHERE o.owner_id = c.owner_id
-          AND c.deal_id = d.deal_id
-          AND o.owner_id = :owner_id";
-
-        $filter_values = [];
-        if (isset($filters['tournament_id'])) {
-            $sql.= " AND g.tournament_id = :tournament_id";
-            $filter_values["tournament_id"] = $filters['tournament_id'];
+        if (isset($filters['is_arrested'])) {
+            $sql .= " AND v.is_arrested = ";
+            $sql .= $filters['is_arrested'] == 1 ? 1 : 0;
         }
-        if (isset($filters['match_id'])) {
-            $sql.= " AND g.match_id = :match_id";
-            $filter_values["match_id"] = $filters['match_id'];
+        if (isset($filters['violation_start_date'])) {
+            $sql.= " AND v.violation_date >= :violation_start_date";
+            $filters_values["violation_start_date"] = $filters['violation_start_date'];
+        }
+        if (isset($filters['violation_end_date'])) {
+            $sql.= " AND v.violation_date <= :violation_end_date";
+            $filters_values["violation_end_date"] = $filters['violation_end_date'];
+        }
+        if (isset($filters['violation_fee'])) {
+            $sql.= " AND v.violation_fee >= :violation_fee";
+            $filters_values["violation_fee"] = $filters['violation_fee'];
         }
 
         $result = $this->getOwnerInfo($owner_id);
         $sql .= " ORDER BY o.owner_id" . $this->sortingOrder($filters);
-        $result['deals'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filter_values]);
+        $result['violations'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filters_values]);
         return $result;
     }
 }

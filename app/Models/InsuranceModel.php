@@ -4,11 +4,10 @@ namespace Vanier\Api\Models;
 
 class InsuranceModel extends BaseModel
 {
-    public function getAllInsurances(array $filters): array
+    public function getAllInsurances(array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM insurances WHERE 1";
 
-        $filters_values = [];
         if (isset($filters['name'])) {
             $sql .= " AND insurance_name LIKE CONCAT(:name,'%')";
             $filters_values['name'] = $filters['name'];
@@ -44,26 +43,45 @@ class InsuranceModel extends BaseModel
         return ['insurance' => $this->fetchSingle($sql, ['insurance_id' => $insurance_id])];
     }
 
-    public function getInsuranceOwners(string $insurance_id, array $filters): array
+    public function getInsuranceOwners(string $insurance_id, array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM
              insurances i, owners o
         WHERE i.insurance_id = o.insurance_id
           AND i.insurance_id = :insurance_id";
 
-        $filter_values = [];
-        if (isset($filters['tournament_id'])) {
-            $sql.= " AND g.tournament_id = :tournament_id";
-            $filter_values["tournament_id"] = $filters['tournament_id'];
+        if (isset($filters['name'])) {
+            $sql .= " AND o.name LIKE CONCAT(:name,'%')";
+            $filters_values['name'] = $filters['name'];
         }
-        if (isset($filters['match_id'])) {
-            $sql.= " AND g.match_id = :match_id";
-            $filter_values["match_id"] = $filters['match_id'];
+        if (isset($filters['email'])) {
+            $sql .= " AND o.email LIKE CONCAT(:email,'%')";
+            $filters_values['email'] = $filters['email'];
+        }
+        if (isset($filters['postal_code'])) {
+            $sql .= " AND o.postal_code LIKE CONCAT(:postal_code,'%')";
+            $filters_values['postal_code'] = $filters['postal_code'];
+        }
+        if (isset($filters['country'])) {
+            $sql .= " AND o.country LIKE CONCAT(:country,'%')";
+            $filters_values['country'] = $filters['country'];
+        }
+        if (isset($filters['city'])) {
+            $sql .= " AND o.city LIKE CONCAT(:city,'%')";
+            $filters_values['city'] = $filters['city'];
+        }
+        if (isset($filters['age'])) {
+            $sql .= " AND o.driver_age LIKE CONCAT(:age,'%')";
+            $filters_values['age'] = $filters['age'];
+        }
+        if (isset($filters['gender'])) {
+            $sql .= " AND o.driver_gender LIKE CONCAT(:gender,'%')";
+            $filters_values['gender'] = $filters['gender'];
         }
 
         $result = $this->getInsuranceInfo($insurance_id);
         $sql .= " ORDER BY i.insurance_id" . $this->sortingOrder($filters);
-        $result['owners'] = $this->paginate($sql, ['insurance_id' => $insurance_id, ...$filter_values]);
+        $result['owners'] = $this->paginate($sql, ['insurance_id' => $insurance_id, ...$filters_values]);
         return $result;
     }
 }
