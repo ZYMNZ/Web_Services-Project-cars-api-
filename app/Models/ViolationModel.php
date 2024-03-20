@@ -5,11 +5,10 @@ namespace Vanier\Api\Models;
 class ViolationModel extends BaseModel
 {
 
-    public function getAllViolations(array $filters): array
+    public function getAllViolations(array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM violations WHERE 1";
 
-        $filters_values = [];
         if (isset($filters['location'])) {
             $sql .= " AND location LIKE CONCAT(:location,'%')";
             $filters_values['location'] = $filters['location'];
@@ -41,7 +40,7 @@ class ViolationModel extends BaseModel
         return ['violation' => $this->fetchSingle($sql, ['violation_id' => $violation_id])];
     }
 
-    public function getViolationCars(string $violation_id, array $filters)
+    public function getViolationCars(string $violation_id, array $filters, array $filters_values = []): array
     {
         $sql = "SELECT * FROM
             violations v, violations_cars vc, cars c
@@ -49,19 +48,30 @@ class ViolationModel extends BaseModel
           AND vc.car_id = c.car_id
           AND v.violation_id = :violation_id";
 
-        $filter_values = [];
-        if (isset($filters['tournament_id'])) {
-            $sql.= " AND g.tournament_id = :tournament_id";
-            $filter_values["tournament_id"] = $filters['tournament_id'];
+        if (isset($filters['horsepower'])) {
+            $sql.= " AND c.horsepower >= :horsepower";
+            $filters_values["horsepower"] = $filters['horsepower'];
         }
-        if (isset($filters['match_id'])) {
-            $sql.= " AND g.match_id = :match_id";
-            $filter_values["match_id"] = $filters['match_id'];
+        if (isset($filters['year'])) {
+            $sql.= " AND c.year = :year";
+            $filters_values["year"] = $filters['year'];
+        }
+        if (isset($filters['car_make'])) {
+            $sql.= " AND c.car_make LIKE CONCAT(:car_make,'%')";
+            $filters_values["car_make"] = $filters['car_make'];
+        }
+        if (isset($filters['car_model'])) {
+            $sql.= " AND c.car_model LIKE CONCAT(:car_model,'%')";
+            $filters_values["car_model"] = $filters['car_model'];
+        }
+        if (isset($filters['is_fuel_economic'])) {
+            $sql.= " AND c.is_fuel_economic = :is_fuel_economic";
+            $filters_values["is_fuel_economic"] = $filters['is_fuel_economic'];
         }
 
         $result = $this->getViolationInfo($violation_id);
         $sql .= " ORDER BY v.violation_id" . $this->sortingOrder($filters);
-        $result['cars'] = $this->paginate($sql, ['violation_id' => $violation_id, ...$filter_values]);
+        $result['cars'] = $this->paginate($sql, ['violation_id' => $violation_id, ...$filters_values]);
         return $result;
     }
 }
