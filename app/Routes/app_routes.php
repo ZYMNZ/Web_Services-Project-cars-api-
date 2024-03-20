@@ -61,15 +61,12 @@ $app->get('/insurances/{insurance_id}', [InsuranceController::class, 'handleGetI
 $app->get('/insurances/{insurance_id}/owners', [InsuranceController::class, 'handleGetInsuranceOwners']);
 
 //* ROUTE: GET /emissions
-
-
-//* ROUTE: GET /consumption
-
-//* ROUTE: GET /emissions
 $app->get('/emissions', [EmissionController::class, 'handleAllEmissions']);
+$app->get('/emissions/{emission_id}', [EmissionController::class, 'handleGetEmissionInfo']);
 
 //* ROUTE: GET /consumption
-$app->get('/consumption', [ConsumptionController::class, 'handleAllConsumptions']);
+$app->get('/consumptions', [ConsumptionController::class, 'handleAllConsumptions']);
+$app->get('/consumptions/{consumption_id}', [ConsumptionController::class, 'handleGetConsumptionInfo']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

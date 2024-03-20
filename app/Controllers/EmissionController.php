@@ -16,7 +16,7 @@ class EmissionController extends BaseController
         EmissionModel();
         $this->pattern = "/^E-\d{5}$/";
     }
-    public function handleAllEmission(Request
+    public function handleAllEmissions(Request
     $request, Response $response, array $uri_args)
     : Response {
         $filters = $request->getQueryParams();
@@ -24,5 +24,15 @@ class EmissionController extends BaseController
         $data = 
         $this->emission_model->getAllEmissions($filters); 
         return $this->makeResponse($response, $data); 
+    }
+
+    public function handleGetEmissionInfo(Request $request, Response $response, array $uri_args): Response {
+        $emission_id = $uri_args['emission_id'];
+        $this->assertIdFormat($request, $emission_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->emission_model->validatePagination($request, $filters);
+        $data = $this->emission_model->getEmissionInfo($emission_id);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
     }
 }

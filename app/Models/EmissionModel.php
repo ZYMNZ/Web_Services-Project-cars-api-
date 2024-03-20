@@ -18,4 +18,10 @@ class EmissionModel extends BaseModel
         $this->sortingOrder($filters);
         return ['emissions' => $this->paginate($sql, $filters_values)];
     }
+
+    public function getEmissionInfo($emission_id): array
+    {
+        $sql = "SELECT * FROM emissions WHERE emission_id = :emission_id";
+        return ['emission' => $this->fetchSingle($sql, ['emission_id' => $emission_id])];
+    }
 }

@@ -14,9 +14,9 @@ class ConsumptionController extends BaseController
         parent::__construct();
         $this->consumption_model = new 
         ConsumptionModel();
-        $this->pattern = "/^C-\d{5}$/";
+        $this->pattern = "/^FC-\d{5}$/";
     }
-    public function handleAllConsumption(Request
+    public function handleAllConsumptions(Request
     $request, Response $response, array $uri_args)
     : Response {
         $filters = $request->getQueryParams();
@@ -24,5 +24,15 @@ class ConsumptionController extends BaseController
         $data = 
         $this->consumption_model->getAllConsumptions($filters); 
         return $this->makeResponse($response, $data); 
+    }
+
+    public function handleGetConsumptionInfo(Request $request, Response $response, array $uri_args): Response {
+        $consumption_id = $uri_args['consumption_id'];
+        $this->assertIdFormat($request, $consumption_id, $this->pattern);
+        $filters = $request->getQueryParams();
+        $this->consumption_model->validatePagination($request, $filters);
+        $data = $this->consumption_model->getConsumptionInfo($consumption_id);
+        $this->assertIdExists($request, $data);
+        return $this->makeResponse($response, $data);
     }
 }

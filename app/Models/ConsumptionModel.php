@@ -18,4 +18,10 @@ class ConsumptionModel extends BaseModel
         $this->sortingOrder($filters);
         return ['consumptions' => $this->paginate($sql, $filters_values)];
     }
+
+    public function getConsumptionInfo($consumption_id): array
+    {
+        $sql = "SELECT * FROM consumptions WHERE consumption_id = :consumption_id";
+        return ['consumption' => $this->fetchSingle($sql, ['consumption_id' => $consumption_id])];
+    }
 }
