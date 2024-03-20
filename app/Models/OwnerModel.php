@@ -128,7 +128,7 @@ class OwnerModel extends BaseModel
         }
         if (isset($filters['is_arrested'])) {
             $sql .= " AND v.is_arrested = ";
-            $sql .= $filters['is_arrested'] == 1 ? 1 : 0;
+            $sql .= $filters['is_arrested'] === 'true' ? 1 : 0;
         }
         if (isset($filters['violation_start_date'])) {
             $sql.= " AND v.violation_date >= :violation_start_date";

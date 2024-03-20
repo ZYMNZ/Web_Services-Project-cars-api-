@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2024 at 02:24 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Mar 20, 2024 at 04:51 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,7 +36,7 @@ CREATE TABLE `cars` (
   `cylinders` int(255) NOT NULL,
   `horsepower` int(255) NOT NULL,
   `year` int(255) NOT NULL,
-  `engine_type` int(255) NOT NULL,
+  `engine_type` varchar(255) NOT NULL,
   `car_make` varchar(255) NOT NULL,
   `car_model` varchar(255) NOT NULL,
   `is_fuel_economic` tinyint(1) NOT NULL,
@@ -51,26 +51,26 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`car_id`, `car_name`, `cylinders`, `horsepower`, `year`, `engine_type`, `car_make`, `car_model`, `is_fuel_economic`, `owner_id`, `emission_id`, `consumption_id`, `deal_id`) VALUES
-('C-00001', 'Honda Accord', 4, 190, 2023, 0, 'Honda', 'Accord', 1, 'O-00001', 'E-00001', 'FC-00001', 'D-00001'),
-('C-00002', 'Ford Mustang', 8, 450, 2022, 0, 'Ford', 'Mustang', 0, 'O-00002', 'E-00002', 'FC-00002', 'D-00002'),
-('C-00003', 'Chevrolet Malibu', 4, 180, 2024, 0, 'Chevrolet', 'Malibu', 1, 'O-00003', 'E-00003', 'FC-00003', 'D-00003'),
-('C-00004', 'Toyota Prius', 4, 120, 2023, 0, 'Toyota', 'Prius', 1, 'O-00004', 'E-00004', 'FC-00004', 'D-00004'),
-('C-00005', 'BMW X5', 6, 300, 2022, 0, 'BMW', 'X5', 0, 'O-00005', 'E-00005', 'FC-00005', 'D-00005'),
-('C-00006', 'Tesla Model 3', 0, 450, 2023, 0, 'Tesla', 'Model 3', 1, 'O-00006', 'E-00006', 'FC-00006', 'D-00006'),
-('C-00007', 'Audi A4', 4, 220, 2024, 0, 'Audi', 'A4', 1, 'O-00007', 'E-00007', 'FC-00007', 'D-00007'),
-('C-00008', 'Nissan Rogue', 4, 170, 2022, 0, 'Nissan', 'Rogue', 0, 'O-00008', 'E-00008', 'FC-00008', 'D-00008'),
-('C-00009', 'Hyundai Sonata', 4, 200, 2023, 0, 'Hyundai', 'Sonata', 1, 'O-00009', 'E-00009', 'FC-00009', 'D-00009'),
-('C-00010', 'Mercedes-Benz C-Class', 6, 300, 2022, 0, 'Mercedes-Benz', 'C-Class', 1, 'O-00010', 'E-00010', 'FC-00010', 'D-00010'),
-('C-00011', 'Volkswagen Golf', 4, 150, 2024, 0, 'Volkswagen', 'Golf', 0, 'O-00011', 'E-00011', 'FC-00011', 'D-00011'),
-('C-00012', 'Lexus RX', 6, 260, 2023, 0, 'Lexus', 'RX', 1, 'O-00012', 'E-00012', 'FC-00012', 'D-00012'),
-('C-00013', 'Mazda CX-5', 4, 187, 2022, 0, 'Mazda', 'CX-5', 1, 'O-00013', 'E-00013', 'FC-00013', 'D-00013'),
-('C-00014', 'Subaru Outback', 4, 182, 2024, 0, 'Subaru', 'Outback', 0, 'O-00014', 'E-00014', 'FC-00014', 'D-00014'),
-('C-00015', 'Kia Telluride', 6, 291, 2023, 0, 'Kia', 'Telluride', 1, 'O-00015', 'E-00015', 'FC-00015', 'D-00015'),
-('C-00016', 'Jaguar F-PACE', 6, 380, 2022, 0, 'Jaguar', 'F-PACE', 1, 'O-00016', 'E-00016', 'FC-00016', 'D-00016'),
-('C-00017', 'Porsche 911', 6, 450, 2024, 0, 'Porsche', '911', 0, 'O-00017', 'E-00017', 'FC-00017', 'D-00017'),
-('C-00018', 'Volvo XC90', 4, 250, 2023, 0, 'Volvo', 'XC90', 1, 'O-00018', 'E-00018', 'FC-00018', 'D-00018'),
-('C-00019', 'Land Rover Range Rover', 8, 518, 2022, 0, 'Land Rover', 'Range Rover', 1, 'O-00019', 'E-00019', 'FC-00019', 'D-00019'),
-('C-00020', 'Chrysler Pacifica', 6, 287, 2024, 0, 'Chrysler', 'Pacifica', 0, 'O-00020', 'E-00020', 'FC-00020', 'D-00020');
+('C-00001', 'Honda Accord', 4, 190, 2023, 'gas', 'Honda', 'Accord', 1, 'O-00001', 'E-00001', 'FC-00001', 'D-00001'),
+('C-00002', 'Ford Mustang', 8, 450, 2022, 'electric', 'Ford', 'Mustang', 0, 'O-00002', 'E-00002', 'FC-00002', 'D-00002'),
+('C-00003', 'Chevrolet Malibu', 4, 180, 2024, 'gas', 'Chevrolet', 'Malibu', 1, 'O-00003', 'E-00003', 'FC-00003', 'D-00003'),
+('C-00004', 'Toyota Prius', 4, 120, 2023, 'electric', 'Toyota', 'Prius', 1, 'O-00004', 'E-00004', 'FC-00004', 'D-00004'),
+('C-00005', 'BMW X5', 6, 300, 2022, 'gas', 'BMW', 'X5', 0, 'O-00005', 'E-00005', 'FC-00005', 'D-00005'),
+('C-00006', 'Tesla Model 3', 0, 450, 2023, 'electric', 'Tesla', 'Model 3', 1, 'O-00006', 'E-00006', 'FC-00006', 'D-00006'),
+('C-00007', 'Audi A4', 4, 220, 2024, 'gas', 'Audi', 'A4', 1, 'O-00007', 'E-00007', 'FC-00007', 'D-00007'),
+('C-00008', 'Nissan Rogue', 4, 170, 2022, 'electric', 'Nissan', 'Rogue', 0, 'O-00008', 'E-00008', 'FC-00008', 'D-00008'),
+('C-00009', 'Hyundai Sonata', 4, 200, 2023, 'gas', 'Hyundai', 'Sonata', 1, 'O-00009', 'E-00009', 'FC-00009', 'D-00009'),
+('C-00010', 'Mercedes-Benz C-Class', 6, 300, 2022, 'electric', 'Mercedes-Benz', 'C-Class', 1, 'O-00010', 'E-00010', 'FC-00010', 'D-00010'),
+('C-00011', 'Volkswagen Golf', 4, 150, 2024, 'gas', 'Volkswagen', 'Golf', 0, 'O-00011', 'E-00011', 'FC-00011', 'D-00011'),
+('C-00012', 'Lexus RX', 6, 260, 2023, 'electric', 'Lexus', 'RX', 1, 'O-00012', 'E-00012', 'FC-00012', 'D-00012'),
+('C-00013', 'Mazda CX-5', 4, 187, 2022, 'gas', 'Mazda', 'CX-5', 1, 'O-00013', 'E-00013', 'FC-00013', 'D-00013'),
+('C-00014', 'Subaru Outback', 4, 182, 2024, 'electric', 'Subaru', 'Outback', 0, 'O-00014', 'E-00014', 'FC-00014', 'D-00014'),
+('C-00015', 'Kia Telluride', 6, 291, 2023, 'gas', 'Kia', 'Telluride', 1, 'O-00015', 'E-00015', 'FC-00015', 'D-00015'),
+('C-00016', 'Jaguar F-PACE', 6, 380, 2022, 'electric', 'Jaguar', 'F-PACE', 1, 'O-00016', 'E-00016', 'FC-00016', 'D-00016'),
+('C-00017', 'Porsche 911', 6, 450, 2024, 'gas', 'Porsche', '911', 0, 'O-00017', 'E-00017', 'FC-00017', 'D-00017'),
+('C-00018', 'Volvo XC90', 4, 250, 2023, 'electric', 'Volvo', 'XC90', 1, 'O-00018', 'E-00018', 'FC-00018', 'D-00018'),
+('C-00019', 'Land Rover Range Rover', 8, 518, 2022, 'gas', 'Land Rover', 'Range Rover', 1, 'O-00019', 'E-00019', 'FC-00019', 'D-00019'),
+('C-00020', 'Chrysler Pacifica', 6, 287, 2024, 'electric', 'Chrysler', 'Pacifica', 0, 'O-00020', 'E-00020', 'FC-00020', 'D-00020');
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ INSERT INTO `cars` (`car_id`, `car_name`, `cylinders`, `horsepower`, `year`, `en
 
 DROP TABLE IF EXISTS `consumptions`;
 CREATE TABLE `consumptions` (
-  `comsumption_id` char(8) NOT NULL,
+  `consumption_id` char(8) NOT NULL,
   `engine_size` int(255) NOT NULL,
   `fuel_consumption_city` float(255,2) NOT NULL,
   `fuel_consumption_hwy` float(255,2) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE `consumptions` (
 -- Dumping data for table `consumptions`
 --
 
-INSERT INTO `consumptions` (`comsumption_id`, `engine_size`, `fuel_consumption_city`, `fuel_consumption_hwy`, `fuel_consumption_combined`) VALUES
+INSERT INTO `consumptions` (`consumption_id`, `engine_size`, `fuel_consumption_city`, `fuel_consumption_hwy`, `fuel_consumption_combined`) VALUES
 ('FC-00001', 2, 26.00, 30.00, 28.00),
 ('FC-00002', 2, 26.00, 30.00, 28.00),
 ('FC-00003', 4, 21.00, 26.00, 23.00),
@@ -384,7 +384,7 @@ ALTER TABLE `cars`
 -- Indexes for table `consumptions`
 --
 ALTER TABLE `consumptions`
-  ADD PRIMARY KEY (`comsumption_id`);
+  ADD PRIMARY KEY (`consumption_id`);
 
 --
 -- Indexes for table `deals`
@@ -432,7 +432,7 @@ ALTER TABLE `violations_cars`
 -- Constraints for table `cars`
 --
 ALTER TABLE `cars`
-  ADD CONSTRAINT `cars_consumptions_comsumption_id_fk` FOREIGN KEY (`consumption_id`) REFERENCES `consumptions` (`comsumption_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cars_consumptions_comsumption_id_fk` FOREIGN KEY (`consumption_id`) REFERENCES `consumptions` (`consumption_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cars_deals_deal_id_fk` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`deal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cars_emissions_emission_id_fk` FOREIGN KEY (`emission_id`) REFERENCES `emissions` (`emission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cars_owners_owner_id_fk` FOREIGN KEY (`owner_id`) REFERENCES `owners` (`owner_id`) ON DELETE CASCADE ON UPDATE CASCADE;
