@@ -1,6 +1,7 @@
 ##### Composer
 vendor/
 env/
+.idea
 
 ##### VisualStudioCode
 ##.vscode/
