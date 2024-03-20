@@ -103,7 +103,8 @@ class CarModel extends BaseModel
 
         $result = $this->getCarById($car_id);
 
-        $sql = "SELECT * FROM consumptions c, cars c WHERE c.consumption_id = c.consumption_id AND car_id = :car_id";
+        $sql = "SELECT * FROM consumptions co, cars c WHERE 
+        c.consumption_id = co.consumption_id AND car_id = :car_id";
 
         if(isset($filters['min_consumption_city'])){
             $sql .= " AND fuel_consumption_city > :min_consumption_city";
@@ -122,7 +123,7 @@ class CarModel extends BaseModel
             $filters_values['max_consumption_hwy'] = $filters['max_consumption_hwy'];
         }
 
-        $sql .= " ORDER BY c.consumption_id " . $this->sortingOrder($filters);
+        $sql .= " ORDER BY co.consumption_id " . $this->sortingOrder($filters);
         $merged_filters = array_merge($filters_values, ['car_id' => $car_id]);
         $result['consumptions'] = $this->paginate($sql, $merged_filters);
         return $result;
