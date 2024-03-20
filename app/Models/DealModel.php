@@ -57,7 +57,7 @@ class DealModel extends BaseModel
         return ['deal' => $this->fetchSingle($sql, ['deal_id' => $deal_id])];
     }
 
-    public function getDealInsurances($deal_id) : array
+    public function getDealInsurances($deal_id,$filters) : array
     {
         $result = [];
         $filters_values = [];

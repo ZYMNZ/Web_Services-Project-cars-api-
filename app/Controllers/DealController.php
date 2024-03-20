@@ -34,7 +34,7 @@ class DealController extends BaseController
         $this->assertIdFormat($request,$deal_id, $this->pattern);
         $filters = $request->getQueryParams();
         $this->deal_model->validatePagination($request, $filters);
-        $data = $this->deal_model->getDealInsurances($deal_id);
+        $data = $this->deal_model->getDealInsurances($deal_id, $filters);
         $this->assertIdExists($request, $data);
         return $this->makeResponse($response, $data);
     }
