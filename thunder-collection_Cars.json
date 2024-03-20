@@ -1,0 +1,370 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Cars",
+    "dateExported": "2024-03-20T04:03:06.944Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "cars",
+            "containerId": "",
+            "created": "2024-03-20T03:09:08.408Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
+            "name": "deals",
+            "containerId": "",
+            "created": "2024-03-20T03:43:02.898Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "8ae7bf10-f302-45e1-8157-e9a57075bf1c",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "/cars",
+            "url": "localhost/cars-api/cars?page_size=15",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-03-20T03:07:03.578Z",
+            "modified": "2024-03-20T03:12:14.787Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page_size",
+                    "value": "15",
+                    "isPath": false
+                },
+                {
+                    "name": "amount_of_cylinders",
+                    "value": "4",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "engine_type",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "year",
+                    "value": "2022",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "is_fuel_economic",
+                    "value": "false",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "car_make",
+                    "value": "F",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "car_model",
+                    "value": "Mus",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "8316a28d-5059-435e-98eb-dcc1f3da11aa",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "cars/{car_id}",
+            "url": "localhost/cars-api/cars/C-00003",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-20T03:08:36.500Z",
+            "modified": "2024-03-20T03:08:56.608Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d447d631-3d32-40e1-bf21-d9ef46bff947",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "cars/{car_id}/emissions",
+            "url": "localhost/cars-api/cars/C-00001/emissions",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-20T03:13:26.394Z",
+            "modified": "2024-03-20T03:27:00.098Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "vehicle_class",
+                    "value": "s",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "fuel_type",
+                    "value": "g",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "0bb7c8bd-37be-4ba5-9add-538a3c6bd6d0",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "cars/{car_id}/deals",
+            "url": "localhost/cars-api/cars/C-00001/deals",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-20T03:27:31.825Z",
+            "modified": "2024-03-20T03:29:08.484Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page_size",
+                    "value": "15",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "min_selling_price",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_selling_price",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "4e600e37-e5d0-41c4-a403-04d51c8d17cd",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d0979029-68d1-414a-815d-36e5f4d88854",
+            "name": "cars/{car_id}/consumptions",
+            "url": "localhost/cars-api/cars/C-00001/consumptions",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-03-20T03:30:08.731Z",
+            "modified": "2024-03-20T03:42:48.467Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page_size",
+                    "value": "15",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "min_consumption_city",
+                    "value": "20",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_consumption_city",
+                    "value": "36",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "min_consumption_hwy",
+                    "value": "26",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_consumption_hwy",
+                    "value": "33",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "3c45338d-5a7f-4b0f-a55e-4579de2175f0",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
+            "name": "/deals",
+            "url": "localhost/cars-api/deals?page_size=15",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-03-20T03:43:09.220Z",
+            "modified": "2024-03-20T03:47:25.422Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page_size",
+                    "value": "15",
+                    "isPath": false
+                },
+                {
+                    "name": "min_selling_price",
+                    "value": "30000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_selling_price",
+                    "value": "7000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "min_km_driven",
+                    "value": "60000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_km_driven",
+                    "value": "70000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "fuel_type",
+                    "value": "h",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "transmission_type",
+                    "value": "a",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "3da2f717-761d-4b1a-85e9-5a1c53a2d00e",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
+            "name": "/deals/{deal_id}",
+            "url": "localhost/cars-api/deals/D-00001",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-03-20T03:47:45.428Z",
+            "modified": "2024-03-20T03:48:05.726Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "71f5fb1a-4595-4b48-8e3d-29fec000334d",
+            "colId": "78d6bc50-f40c-466d-a51f-5ec627d7883f",
+            "containerId": "d89b9d8b-aa8d-4ac1-8cee-7132fae2b1b4",
+            "name": "/deals/{deal_id}/insurances",
+            "url": "localhost/cars-api/deals/D-00002/insurances",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-03-20T03:48:45.679Z",
+            "modified": "2024-03-20T03:59:21.730Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page_size",
+                    "value": "15",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "min_price",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "max_price",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "desc",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        }
+    ]
+}
