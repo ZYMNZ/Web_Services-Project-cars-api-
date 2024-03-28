@@ -9,12 +9,30 @@ class ConsumptionModel extends BaseModel
     {
         $sql = "SELECT * FROM consumptions WHERE 1";
 
-        $filters_values = []; 
-        if (isset($filters['csc'])) {
-            $filters_values['csc'] = $filters['csc'];
+        $filters_values = [];
+        // Engine Size
+        if (isset($filters['engine_size'])) {
+            $sql .= " AND engine_size = :engine_size";
+            $filters_values['engine_size'] = $filters['engine_size']; 
+        }   
+
+        if (isset($filters['fuel_consumption_city'])) {
+            $sql .= " AND fuel_consumption_city = :fuel_consumption_city";
+            $filters_values['fuel_consumption_city'] = $filters['fuel_consumption_city'];
+        }
+
+        if (isset($filters['fuel_consumption_hwy'])) {
+            $sql .= " AND fuel_consumption_hwy = :fuel_consumption_hwy";
+            $filters_values['fuel_consumption_hwy'] = $filters['fuel_consumption_hwy'];
+        }
+
+        if (isset($filters['fuel_consumption_combined'])) {
+            $sql .= " AND fuel_consumption_combined = :fuel_consumption_combined";
+            $filters_values['fuel_consumption_combined'] = $filters['fuel_consumption_combined'];
         }
 
         $sql .= " ORDER BY consumption_id " .
+        // var_dump($sql);
         $this->sortingOrder($filters);
         return ['consumptions' => $this->paginate($sql, $filters_values)];
     }
