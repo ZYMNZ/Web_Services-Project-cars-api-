@@ -15,7 +15,7 @@ class CarModel extends BaseModel
             $filters_values['amount_of_cylinders'] = $filters['amount_of_cylinders'];
         }
         if (isset($filters['engine_type'])) {
-            $sql .= " AND engine_type CONCAT(:engine_type,'%')";
+            $sql .= " AND engine_type LIKE CONCAT(:engine_type,'%')";
             $filters_values['engine_type'] = $filters['engine_type'];
         }
         if (isset($filters['year'])) {

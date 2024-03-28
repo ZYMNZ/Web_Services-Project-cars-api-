@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 04:51 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Mar 28, 2024 at 02:39 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,24 +53,24 @@ CREATE TABLE `cars` (
 INSERT INTO `cars` (`car_id`, `car_name`, `cylinders`, `horsepower`, `year`, `engine_type`, `car_make`, `car_model`, `is_fuel_economic`, `owner_id`, `emission_id`, `consumption_id`, `deal_id`) VALUES
 ('C-00001', 'Honda Accord', 4, 190, 2023, 'gas', 'Honda', 'Accord', 1, 'O-00001', 'E-00001', 'FC-00001', 'D-00001'),
 ('C-00002', 'Ford Mustang', 8, 450, 2022, 'electric', 'Ford', 'Mustang', 0, 'O-00002', 'E-00002', 'FC-00002', 'D-00002'),
-('C-00003', 'Chevrolet Malibu', 4, 180, 2024, 'gas', 'Chevrolet', 'Malibu', 1, 'O-00003', 'E-00003', 'FC-00003', 'D-00003'),
-('C-00004', 'Toyota Prius', 4, 120, 2023, 'electric', 'Toyota', 'Prius', 1, 'O-00004', 'E-00004', 'FC-00004', 'D-00004'),
+('C-00003', 'Chevrolet Malibu', 4, 180, 2024, 'electric', 'Chevrolet', 'Malibu', 1, 'O-00003', 'E-00003', 'FC-00003', 'D-00003'),
+('C-00004', 'Toyota Prius', 4, 120, 2023, 'gas', 'Toyota', 'Prius', 1, 'O-00004', 'E-00004', 'FC-00004', 'D-00004'),
 ('C-00005', 'BMW X5', 6, 300, 2022, 'gas', 'BMW', 'X5', 0, 'O-00005', 'E-00005', 'FC-00005', 'D-00005'),
 ('C-00006', 'Tesla Model 3', 0, 450, 2023, 'electric', 'Tesla', 'Model 3', 1, 'O-00006', 'E-00006', 'FC-00006', 'D-00006'),
 ('C-00007', 'Audi A4', 4, 220, 2024, 'gas', 'Audi', 'A4', 1, 'O-00007', 'E-00007', 'FC-00007', 'D-00007'),
 ('C-00008', 'Nissan Rogue', 4, 170, 2022, 'electric', 'Nissan', 'Rogue', 0, 'O-00008', 'E-00008', 'FC-00008', 'D-00008'),
-('C-00009', 'Hyundai Sonata', 4, 200, 2023, 'gas', 'Hyundai', 'Sonata', 1, 'O-00009', 'E-00009', 'FC-00009', 'D-00009'),
-('C-00010', 'Mercedes-Benz C-Class', 6, 300, 2022, 'electric', 'Mercedes-Benz', 'C-Class', 1, 'O-00010', 'E-00010', 'FC-00010', 'D-00010'),
+('C-00009', 'Hyundai Sonata', 4, 200, 2023, 'electric', 'Hyundai', 'Sonata', 1, 'O-00009', 'E-00009', 'FC-00009', 'D-00009'),
+('C-00010', 'Mercedes-Benz C-Class', 6, 300, 2022, 'gas', 'Mercedes-Benz', 'C-Class', 1, 'O-00010', 'E-00010', 'FC-00010', 'D-00010'),
 ('C-00011', 'Volkswagen Golf', 4, 150, 2024, 'gas', 'Volkswagen', 'Golf', 0, 'O-00011', 'E-00011', 'FC-00011', 'D-00011'),
-('C-00012', 'Lexus RX', 6, 260, 2023, 'electric', 'Lexus', 'RX', 1, 'O-00012', 'E-00012', 'FC-00012', 'D-00012'),
-('C-00013', 'Mazda CX-5', 4, 187, 2022, 'gas', 'Mazda', 'CX-5', 1, 'O-00013', 'E-00013', 'FC-00013', 'D-00013'),
-('C-00014', 'Subaru Outback', 4, 182, 2024, 'electric', 'Subaru', 'Outback', 0, 'O-00014', 'E-00014', 'FC-00014', 'D-00014'),
-('C-00015', 'Kia Telluride', 6, 291, 2023, 'gas', 'Kia', 'Telluride', 1, 'O-00015', 'E-00015', 'FC-00015', 'D-00015'),
-('C-00016', 'Jaguar F-PACE', 6, 380, 2022, 'electric', 'Jaguar', 'F-PACE', 1, 'O-00016', 'E-00016', 'FC-00016', 'D-00016'),
-('C-00017', 'Porsche 911', 6, 450, 2024, 'gas', 'Porsche', '911', 0, 'O-00017', 'E-00017', 'FC-00017', 'D-00017'),
+('C-00012', 'Lexus RX', 6, 260, 2023, 'gas', 'Lexus', 'RX', 1, 'O-00012', 'E-00012', 'FC-00012', 'D-00012'),
+('C-00013', 'Mazda CX-5', 4, 187, 2022, 'electric', 'Mazda', 'CX-5', 1, 'O-00013', 'E-00013', 'FC-00013', 'D-00013'),
+('C-00014', 'Subaru Outback', 4, 182, 2024, 'gas', 'Subaru', 'Outback', 0, 'O-00014', 'E-00014', 'FC-00014', 'D-00014'),
+('C-00015', 'Kia Telluride', 6, 291, 2023, 'electric', 'Kia', 'Telluride', 1, 'O-00015', 'E-00015', 'FC-00015', 'D-00015'),
+('C-00016', 'Jaguar F-PACE', 6, 380, 2022, 'gas', 'Jaguar', 'F-PACE', 1, 'O-00016', 'E-00016', 'FC-00016', 'D-00016'),
+('C-00017', 'Porsche 911', 0, 450, 2024, 'gas', 'Porsche', '911', 0, 'O-00017', 'E-00017', 'FC-00017', 'D-00017'),
 ('C-00018', 'Volvo XC90', 4, 250, 2023, 'electric', 'Volvo', 'XC90', 1, 'O-00018', 'E-00018', 'FC-00018', 'D-00018'),
 ('C-00019', 'Land Rover Range Rover', 8, 518, 2022, 'gas', 'Land Rover', 'Range Rover', 1, 'O-00019', 'E-00019', 'FC-00019', 'D-00019'),
-('C-00020', 'Chrysler Pacifica', 6, 287, 2024, 'electric', 'Chrysler', 'Pacifica', 0, 'O-00020', 'E-00020', 'FC-00020', 'D-00020');
+('C-00020', 'Chrysler Pacifica', 6, 287, 2024, 'gas', 'Chrysler', 'Pacifica', 0, 'O-00020', 'E-00020', 'FC-00020', 'D-00020');
 
 -- --------------------------------------------------------
 
