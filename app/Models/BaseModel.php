@@ -7,6 +7,7 @@ namespace Vanier\Api\Models;
 use PDO;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\InputsHelper;
 use Vanier\Api\Helpers\PaginationHelper;
@@ -276,21 +277,29 @@ abstract class BaseModel
         return $stmt->rowCount();
     }
 
+    /**
+     * validatePagination: Validates if the page number and/or page size if are/is valid. 
+     * - It throws 400 (bad request), if the passed value is invalid.
+     */
+
     public function validatePagination(Request $request, array $filters): void
     {
         $filters['page'] = $filters['page'] ?? 1;
         $filters['page_size'] = $filters['page_size'] ?? 5;
         $filters['page'] = InputsHelper::isInt($filters['page'], 1);
         $filters['page_size'] = InputsHelper::isIntAndInRange($filters['page_size'], 1, 20);
+
         if (!$filters['page']) {
-            throw new HttpInvalidInputException(
+            throw new HttpBadRequestException(
                 $request,
                 "The supplied page number is not a valid page number");
         }
         else if (!$filters['page_size']) {
-            throw new HttpInvalidInputException(
+            throw new HttpBadRequestException(
                 $request,
-                "The supplied page size is not a valid page size");
+                "The supplied page size is not a valid page size"
+            );
+            
         }
         $this->setPaginationOptions((int)$filters['page'], (int)$filters['page_size']);
     }

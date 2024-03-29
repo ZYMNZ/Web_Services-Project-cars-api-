@@ -9,10 +9,6 @@ class DealModel extends BaseModel
     {
         $filters_values = [];
         $sql = "SELECT * FROM deals WHERE 1";
-        if (isset($filters['amount_of_cylinders'])) {
-            $sql .= " AND amount_of_cylinders > :amount_of_cylinders";
-            $filters_values[] = $filters['amount_of_cylinders'];
-        }
         /**
          * min_ selling_price
          * max_selling_price
@@ -70,11 +66,11 @@ class DealModel extends BaseModel
            AND o.insurance_id = i.insurance_id 
            AND d.deal_id = :deal_id";
         if(isset($filters['min_price'])){
-            $sql .= " AND price > :min_price";
+            $sql .= " AND i.price > :min_price";
             $filters_values['min_price'] = $filters['min_price'];
         }
         if(isset($filters['max_price'])){
-            $sql .= " AND price < :max_price";
+            $sql .= " AND i.price < :max_price";
             $filters_values['max_price'] = $filters['max_price'];
         }
         $sql .= " ORDER BY i.insurance_id " . $this->sortingOrder($filters);
