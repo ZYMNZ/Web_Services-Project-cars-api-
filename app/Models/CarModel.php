@@ -128,4 +128,23 @@ class CarModel extends BaseModel
         $result['consumptions'] = $this->paginate($sql, $merged_filters);
         return $result;
     }
+
+    public function createCar(array $cars) : mixed {
+        return $this->insert("cars", $cars);
+    }
+    
+    public function updateCars(array $car_data, int $car_id) : mixed {
+        return $this->update(
+            "cars",
+            $car_data,
+            ["car_id" => $car_id]
+        );
+    }
+
+    public function deleteCar($car_id) : mixed {
+        return $this->delete(
+            "cars",
+            ["car_id" => $car_id]
+        );
+    }
 }

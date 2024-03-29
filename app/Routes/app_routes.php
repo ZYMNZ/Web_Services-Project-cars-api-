@@ -36,6 +36,9 @@ $app->get('/cars/{car_id}/deals', [CarController::class, 'handleGetCarDeals']);
 //* ROUTE: GET /cars/{car_id}/consumptions
 $app->get('/cars/{car_id}/consumptions', [CarController::class, 'handleGetCarConsumptions']);
 
+//* POST GET /cars
+$app->post('/cars', [CarController::class,'handleCreateCars']);
+
 //* ROUTE: GET /deals
 $app->get('/deals', [DealController::class, 'handleGetAllDeals']);
 //* ROUTE: GET /deals/{deal_id}

@@ -60,4 +60,27 @@ class CarController extends BaseController
         $this->assertIdExists($request, $data);
         return $this->makeResponse($response, $data);
     }
+
+    //POST cars
+    public function handleCreateCars(Request $request, Response $response, array $uri_args): Response
+    {
+        //? Step 1) get the parsed data from the request's body
+        $cars = $request->getParsedBody(); 
+        //? Step 2) Process the collection items to be created:
+        
+        //TODO Validate the received values using the Valitron (or your custom validation methods)
+
+        foreach ($cars as $key => $value) {
+            //! Insert the new car into the DB table
+            $this->cars_model->createCar($value);
+        } 
+
+        //?Step3) prepare the response
+        $response_data = array(
+            "code" => "success", 
+            "message" => "the specified cars have been created successfully"
+        );
+        
+        return $response= $this->makeResponse($response, $response_data,201);
+    }
 }
