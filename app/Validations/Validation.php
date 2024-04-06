@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanier\Api\Models;
+namespace Vanier\Api\Validations;
 
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\Validator;
