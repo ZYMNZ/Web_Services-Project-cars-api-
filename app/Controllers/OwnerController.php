@@ -19,8 +19,9 @@ class OwnerController extends BaseController
 
     public function handleGetAllOwners(Request $request, Response $response, array $uri_args): Response {
         $filters = $request->getQueryParams();
+        $filters = array_map('trim', $filters);
         $this->owner_model->validatePagination($request, $filters);
-        $data = $this->owner_model->getAllOwners($filters);
+        $data = $this->owner_model->getAllOwners($filters, $request);
         return $this->makeResponse($response, $data);
     }
     public function handleGetOwnerInfo(Request $request, Response $response, array $uri_args): Response {

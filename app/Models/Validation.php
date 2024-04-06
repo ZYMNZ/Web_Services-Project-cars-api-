@@ -2,11 +2,13 @@
 
 namespace Vanier\Api\Models;
 
+use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\Validator;
 
 class Validation
 {
-    private static array $NAME = ['name' => ['required', 'alpha']];
+    //* /owners rules
+    private static array $NAME = ['name' => ['required', ['regex', '/^[a-zA-Z\s]+$/']]];
     private static array $EMAIL = ['email' => ['required', 'email']];
     private static array $POSTAL_CODE = ['postal_code' => ['required', 'alphaNum']]; //length ???
     private static array $COUNTRY = ['country' => ['required', 'alpha']];
@@ -14,50 +16,42 @@ class Validation
     private static array $AGE = ['age' => ['required', 'integer', ['lengthMax', 3]]];
     private static array $GENDER = ['gender' => ['required', 'alpha', ['in', ['male', 'female']]]];
 
-    public static function validate($filters): void
+    //* /owners rules
+
+
+    public static function validate($filters, $request): void
     {
         $rules = [];
-        $filterNames = array_keys($filters);
-        foreach ($filterNames as $filterName) {
-            $rules = self::buildRules($filterName, $rules);
+        $filter_names = array_keys($filters);
+        foreach ($filter_names as $filter_name) {
+            $rules = self::buildRules($filter_name, $rules);
         }
         $validator = new Validator($filters);
         $validator->mapFieldsRules($rules);
 
-        if ($validator->validate()) {
-//            echo "<br> Valid data!";
-        } else {
-            //var_dump($validator->errors());
-            //print_r($validator->errors());
-            echo $validator->errorsToString();
-            echo $validator->errorsToJson();
+        if (!$validator->validate()) {
+            throw new HttpInvalidInputException(
+                $request,
+                trim($validator->errorsToString())
+            );
         }
     }
 
-    private static function buildRules(string $filterName, array $rules): array
+    private static function buildRules(string $filter_name, array $rules): array
     {
-        switch ($filterName) {
-            case 'name':
-                $rules += self::$NAME;
-                break;
-            case 'email':
-                $rules += self::$EMAIL;
-                break;
-            case 'postal_code':
-                $rules += self::$POSTAL_CODE;
-                break;
-            case 'country':
-                $rules += self::$COUNTRY;
-                break;
-            case 'city':
-                $rules += self::$CITY;
-                break;
-            case 'age':
-                $rules += self::$AGE;
-                break;
-            case 'gender':
-                $rules += self::$GENDER;
-                break;
+        $filter_rules = [
+            //* /owners rules
+            'name' => self::$NAME,
+            'email' => self::$EMAIL,
+            'postal_code' => self::$POSTAL_CODE,
+            'country' => self::$COUNTRY,
+            'city' => self::$CITY,
+            'age' => self::$AGE,
+            'gender' => self::$GENDER,
+        ];
+
+        if (array_key_exists($filter_name, $filter_rules)) {
+            $rules += $filter_rules[$filter_name];
         }
         return $rules;
     }

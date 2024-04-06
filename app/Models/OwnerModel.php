@@ -9,11 +9,11 @@ class OwnerModel extends BaseModel
     {
         parent::__construct();
     }
-    public function getAllOwners(array $filters, array $filters_values = []): array
+    public function getAllOwners(array $filters, $request, array $filters_values = []): array
     {
         $sql = "SELECT * FROM owners WHERE 1";
 
-        Validation::validate($filters);
+        Validation::validate($filters, $request);
 
         if (isset($filters['name'])) {
             $sql .= " AND name LIKE CONCAT(:name,'%')";
