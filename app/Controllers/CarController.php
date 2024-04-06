@@ -65,7 +65,7 @@ class CarController extends BaseController
     public function handleCreateCars(Request $request, Response $response, array $uri_args): Response
     {
         //? Step 1) get the parsed data from the request's body
-        $cars = $request->getParsedBody(); 
+        $cars = $request->getParsedBody();
         //? Step 2) Process the collection items to be created:
         
         //TODO Validate the received values using the Valitron (or your custom validation methods)
@@ -75,12 +75,53 @@ class CarController extends BaseController
             $this->cars_model->createCar($value);
         } 
 
-        //?Step3) prepare the response
+        //? Step3) prepare the response
         $response_data = array(
             "code" => "success", 
-            "message" => "the specified cars have been created successfully"
+            "message" => "the specified cars have been created successfully!"
         );
         
         return $response= $this->makeResponse($response, $response_data,201);
     }
+
+    public function handleUpdateCars(Request $request, Response $response, array $uri_args): Response
+    {
+        $cars = $request->getParsedBody();
+
+        foreach($cars as $car){
+            $car_id = $car['car_id'];
+            unset($car['car_id']);
+            
+            //! we're sending the data body without the id, we only need the id to know which car[row] to update
+            $this->cars_model->updateCars($car,$car_id);
+        }
+
+        $response_data = array(
+            "code" => "success",
+            "message" => "the specified cars have been updated successfully!"
+        );
+
+        return $this->makeResponse(
+            $response,
+            $response_data,
+            201
+        );
+    }
+
+    public function handleDeleteCars(Request $request, Response $response, array $uri_args): Response
+    {
+        $cars = $request->getParsedBody();
+
+        foreach ($cars as $car_id) {
+            $this->cars_model->deleteCar($car_id);
+        }
+
+        $response_data = array(
+            "code" => "success",
+            "message" => "the specified cars have been deleted successfully!"
+        );
+
+        return $this->makeResponse($response, $response_data, 200);
+    }
+
 }
