@@ -81,7 +81,7 @@ class CarController extends BaseController
             "message" => "the specified cars have been created successfully!"
         );
         
-        return $response= $this->makeResponse($response, $response_data,201);
+        return $this->makeResponse($response, $response_data,201);
     }
 
     public function handleUpdateCars(Request $request, Response $response, array $uri_args): Response
