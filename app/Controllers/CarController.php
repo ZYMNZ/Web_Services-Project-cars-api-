@@ -115,6 +115,8 @@ class CarController extends BaseController
     {
         $cars = $request->getParsedBody();
 
+        Validation::validateCarsDeletion($cars, $request);
+
         foreach ($cars as $car_id) {
             $this->cars_model->deleteCar($car_id);
         }
