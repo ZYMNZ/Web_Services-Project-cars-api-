@@ -115,4 +115,66 @@ class Validation
         }
         return $rules;
     }
+
+/**
+ * Validates the data for car creation.
+ *
+ * This method validates the data provided for creating a car. It checks for required fields,
+ * validates the data types of the fields, and applies specific rules such as minimum values
+ * and regex patterns to the fields. If the validation fails, it throws an exception.
+ *
+ * @param array $data The data to be validated.
+ * @param mixed $request For the exception.
+ * @throws HttpInvalidInputException If the validation fails.
+ *
+ * @return void
+ */
+public static function validateCarsCreation($data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', [
+        'car_id',
+        'car_name',
+        'cylinders',
+        'horsepower',
+        'year',
+        'engine_type',
+        'car_make',
+        'car_model',
+        'is_fuel_economic',
+        'owner_id',
+        'deal_id',
+    ])->message('{field} is required')
+        ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
+        ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
+        ->rule('alpha', ['car_name', 'engine_type', 'car_make', 'car_model'])->message('{field} must be a string')
+        ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"')
+        ->rule('regex', 'car_name', '^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
+        ->rule('regex', ['car_make','car_model','engine_type','engine_type'], '^[A-Za-z]+$')->message('{field} must be a string')
+        ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
+        ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
+        ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
+        ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must be in the format O-XXXXX example:"O-12345"')
+        ->rule('regex', 'emission_id', '/^E-\d{5}$/')->message('{field} must be in the format E-XXXXX example:"E-12345"')
+        ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
+
+    $validator->labels([
+        'car_id' => 'Car ID',
+        'car_name' => 'Car Name',
+        'cylinders' => 'Cylinders',
+        'horsepower' => 'Horsepower',
+        'year' => 'Year',
+        'engine_type' => 'Engine Type',
+        'car_make' => 'Car Make',
+        'car_model' => 'Car Model',
+        'is_fuel_economic' => 'Is Fuel Economic',
+        'owner_id' => 'Owner ID',
+        'emission_id' => 'Emission ID',
+        'consumption_id' => 'Consumption ID',
+        'deal_id' => 'Deal ID'
+    ]);
+
+    self::validate($validator, $request);
+}
+
 }
