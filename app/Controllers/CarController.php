@@ -90,10 +90,12 @@ class CarController extends BaseController
     {
         $cars = $request->getParsedBody();
 
+
         foreach($cars as $car){
             $car_id = $car['car_id'];
             unset($car['car_id']);
-            
+
+            Validation::validateCarsUpdate($car, $request);
             //! we're sending the data body without the id, we only need the id to know which car[row] to update
             $this->cars_model->updateCars($car,$car_id);
         }
@@ -114,9 +116,9 @@ class CarController extends BaseController
     {
         $cars = $request->getParsedBody();
 
-        Validation::validateCarsDeletion($cars, $request);
-
         foreach ($cars as $car_id) {
+//            var_dump($car_id);
+            Validation::validateCarsDeletion($car_id, $request);
             $this->cars_model->deleteCar($car_id);
         }
 
@@ -125,7 +127,11 @@ class CarController extends BaseController
             "message" => "the specified cars have been deleted successfully!"
         );
 
-        return $this->makeResponse($response, $response_data, 200);
+        return $this->makeResponse(
+            $response,
+            $response_data,
+            200
+        );
     }
 
 }

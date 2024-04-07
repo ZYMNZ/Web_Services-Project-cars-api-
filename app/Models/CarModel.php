@@ -133,7 +133,7 @@ class CarModel extends BaseModel
         return $this->insert("cars", $cars);
     }
     
-    public function updateCars(array $car_data, int $car_id) : mixed {
+    public function updateCars(array $car_data, $car_id) : mixed {
         return $this->update(
             "cars",
             $car_data,
