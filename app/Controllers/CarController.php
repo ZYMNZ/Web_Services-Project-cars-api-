@@ -68,13 +68,12 @@ class CarController extends BaseController
         //? Step 1) get the parsed data from the request's body
         $cars = $request->getParsedBody();
         //? Step 2) Process the collection items to be created:
-        
+//        var_dump($cars);
         //TODO Validate the received values using the Valitron (or your custom validation methods)
-
-        Validation::validateCarsCreation($cars,$request);
 
         foreach ($cars as $key => $value) {
             //! Insert the new car into the DB table
+            Validation::validateCarsCreation($value,$request);
             $this->cars_model->createCar($value);
         } 
 
