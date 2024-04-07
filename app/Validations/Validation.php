@@ -147,12 +147,11 @@ public static function validateCarsCreation(array $data, $request): void
     ])->message('{field} is required')
         ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
         ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
-        ->rule('alpha', ['car_name', 'engine_type', 'car_make', 'car_model'])->message('{field} must be a string')
+        ->rule('alpha', ['engine_type', 'car_make', 'car_model'])->message('{field} must be a string')
         ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"')
         ->rule('regex', 'car_name', '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
-        ->rule('regex', ['car_make','car_model','engine_type','engine_type'], '/^[A-Za-z]+$/')->message('{field} must be a string')
-        ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
-        ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
+        ->rule('min', ['cylinders','horsepower'], 0)->message('{field} cannot be less than 0')
+        ->rule('min', 'year', 1950)->message('{field} cannot be less than 1950')
         ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
         ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must be in the format O-XXXXX example:"O-12345"')
         ->rule('optional',['emission_id','consumption_id'])
@@ -173,6 +172,51 @@ public static function validateCarsCreation(array $data, $request): void
         'emission_id' => 'Emission ID',
         'consumption_id' => 'Consumption ID',
         'deal_id' => 'Deal ID'
+    ]);
+
+    self::validate($validator, $request);
+}
+
+/**
+ * Validates the data for car update.
+ *
+ * This method validates the data provided for updating a car.
+ * It checks for required fields, validates the data types of the fields, and applies specific rules.
+ * If the validation fails, it throws an exception.
+ *
+ * @param array $data The data to be validated.
+ * @param mixed $request For the exception.
+ * @throws HttpInvalidInputException If the validation fails.
+ *
+ * @return void
+ */
+public static function validateCarsUpdate(array $data, $request): void
+{
+
+
+}
+
+/**
+ * Validates the data for car deletion.
+ *
+ * This method validates the data provided for deleting a car.
+ * It checks if the id is valid.
+ * If the validation fails, it throws an exception.
+ *
+ * @param array $data The data to be validated.
+ * @param mixed $request For the exception.
+ * @throws HttpInvalidInputException If the validation fails.
+ *
+ * @return void
+ */
+public static function validateCarsDeletion(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', ['car_id'])->message('{field} is required')
+        ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"');
+
+    $validator->labels([
+        'car_id' => 'Car ID'
     ]);
 
     self::validate($validator, $request);
