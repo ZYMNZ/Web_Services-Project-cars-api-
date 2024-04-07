@@ -53,23 +53,42 @@ class Validation
             'driver_gender',
             'insurance_id'
         ])->message('{field} is required')
-            ->rule('integer', 'postal_code')->message('{field} must be an integer');
+            ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must start with {O-} and end with 5 numeric values')
+            ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must start with {O-} and end with 5 numeric values')
+            ->rule('regex', ['name', 'country', 'city'], '/^[a-zA-Z\s]+$/')->message('{field} must not have special characters or numbers')
+            ->rule('regex', 'driver_gender', '/^(male|female)$/i')->message('{field} cannot be anything other than male or female')
+            ->rule('regex', 'insurance_id', '/^I-\d{5}$/')->message('{field} must start with {I-} and end with 5 numeric values')
+            ->rule('email', 'email')->message('{field} is not a valid')
+            ->rule('alphaNum', 'postal_code')->message('{field} is not a valid')
+            ->rule('integer', 'driver_age')->message('{field} must be an integer')
+            ->rule('min', 'driver_age', '18')->message('{field} cannot be less than 18')
+            ->rule('max', 'driver_age', '100')->message('{field} cannot be greater than 100');
+
+
         $validator->labels([
             'owner_id' => 'Owner ID',
             'name' => 'Name',
-            'email' => 'Email',
+            'email' => 'Email address',
             'postal_code' => 'Postal code',
             'country' => 'Country',
             'city' => 'City',
-            'driver_age' => 'Driver Age',
-            'driver_gender' => 'Driver Gender',
+            'driver_age' => 'Driver age',
+            'driver_gender' => 'Driver gender',
             'insurance_id' => 'Insurance ID'
         ]);
+        self::validate($validator, $request);
+    }
 
+    public static function validate($validator, $request): void
+    {
         if (!$validator->validate()) {
+            $message = trim($validator->errorsToString());
+            if (str_contains($message, '  ')) {
+                $message = str_replace('  ', ' ', $message);
+            }
             throw new HttpInvalidInputException(
                 $request,
-                $validator->errorsToString()
+                $message
             );
         }
     }
