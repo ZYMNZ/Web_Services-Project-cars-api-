@@ -129,7 +129,7 @@ class Validation
  *
  * @return void
  */
-public static function validateCarsCreation($data, $request): void
+public static function validateCarsCreation(array $data, $request): void
 {
     $validator = new Validator($data);
     $validator->rule('required', [
@@ -149,12 +149,13 @@ public static function validateCarsCreation($data, $request): void
         ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
         ->rule('alpha', ['car_name', 'engine_type', 'car_make', 'car_model'])->message('{field} must be a string')
         ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"')
-        ->rule('regex', 'car_name', '^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
-        ->rule('regex', ['car_make','car_model','engine_type','engine_type'], '^[A-Za-z]+$')->message('{field} must be a string')
+        ->rule('regex', 'car_name', '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
+        ->rule('regex', ['car_make','car_model','engine_type','engine_type'], '/^[A-Za-z]+$/')->message('{field} must be a string')
         ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
         ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
         ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
         ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must be in the format O-XXXXX example:"O-12345"')
+        ->rule('optional',['emission_id','consumption_id'])
         ->rule('regex', 'emission_id', '/^E-\d{5}$/')->message('{field} must be in the format E-XXXXX example:"E-12345"')
         ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
 
