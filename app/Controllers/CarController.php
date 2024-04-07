@@ -129,8 +129,7 @@ class CarController extends BaseController
 
         return $this->makeResponse(
             $response,
-            $response_data,
-            200
+            $response_data
         );
     }
 
