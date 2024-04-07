@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Vanier\Api\Models\CarModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Validations\Validation;
 
 class CarController extends BaseController
 {
@@ -69,6 +70,8 @@ class CarController extends BaseController
         //? Step 2) Process the collection items to be created:
         
         //TODO Validate the received values using the Valitron (or your custom validation methods)
+
+        Validation::validateCarsCreation($cars,$request);
 
         foreach ($cars as $key => $value) {
             //! Insert the new car into the DB table
