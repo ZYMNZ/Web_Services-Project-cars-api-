@@ -64,6 +64,12 @@ $app->get('/owners/{owner_id}/violations', [OwnerController::class, 'handleGetOw
 //* ROUTE: POST /owners
 $app->post('/owners', [OwnerController::class, 'handleCreateOwners']);
 
+//* ROUTE: PUT /owners
+$app->put('/owners', [OwnerController::class, 'handleUpdateOwners']);
+
+//* ROUTE: DELETE /owners
+$app->delete('/owners', [OwnerController::class, 'handleDeleteOwners']);
+
 
 //* ROUTE: GET /violations
 $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
