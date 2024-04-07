@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\OwnerModel;
+use Vanier\Api\Validations\Validation;
 
 class OwnerController extends BaseController
 {
@@ -62,5 +63,23 @@ class OwnerController extends BaseController
         $data = $this->owner_model->getOwnerViolations($owner_id, $filters);
         $this->assertIdExists($request, $data);
         return $this->makeResponse($response, $data);
+    }
+
+    public function handleCreateOwners(Request $request, Response $response, array $uri_args): Response
+    {
+        $cars = $request->getParsedBody();
+        //TODO Validate the received values using the Valitron (or your custom validation methods)
+
+
+        foreach ($cars as $key => $value) {
+            Validation::validateOwners($value, $request);
+            $this->owner_model->createOwner($value);
+        }
+        $response_data = array(
+            "code" => "success",
+            "message" => "the specified owners have been created successfully!"
+        );
+
+        return $this->makeResponse($response, $response_data,201);
     }
 }

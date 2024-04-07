@@ -61,6 +61,10 @@ $app->get('/owners/{owner_id}/cars', [OwnerController::class, 'handleGetOwnerCar
 $app->get('/owners/{owner_id}/deals', [OwnerController::class, 'handleGetOwnerDeals']);
 $app->get('/owners/{owner_id}/violations', [OwnerController::class, 'handleGetOwnerViolations']);
 
+//* ROUTE: POST /owners
+$app->post('/owners', [OwnerController::class, 'handleCreateOwners']);
+
+
 //* ROUTE: GET /violations
 $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
 $app->get('/violations/{violation_id}', [ViolationController::class, 'handleGetViolationInfo']);

@@ -13,7 +13,7 @@ class OwnerModel extends BaseModel
     {
         $sql = "SELECT * FROM owners WHERE 1";
 
-        Validation::validate($filters, $request);
+        Validation::validateOwners($filters, $request);
 
         if (isset($filters['name'])) {
             $sql .= " AND name LIKE CONCAT(:name,'%')";
@@ -149,5 +149,10 @@ class OwnerModel extends BaseModel
         $sql .= " ORDER BY o.owner_id" . $this->sortingOrder($filters);
         $result['violations'] = $this->paginate($sql, ['owner_id' => $owner_id, ...$filters_values]);
         return $result;
+    }
+
+    public function createOwner(array $data): false|string
+    {
+        return $this->insert("owners", $data);
     }
 }
