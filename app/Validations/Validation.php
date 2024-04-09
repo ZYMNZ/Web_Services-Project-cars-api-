@@ -312,4 +312,82 @@ public static function validateCarsDeletion(array $data, $request): void
     self::validate($validator, $request);
 }
 
+public static function validateConsumptionCreation(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', [
+        'consumption_id',
+        'engine_size',
+        'fuel_consumption_city',
+        'fuel_consumption_hwy',
+        'fuel_consumption_combined',
+    ])->message('{field} is required')
+        ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
+        ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
+        ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"')
+        ->rule('regex', ['car_name','engine_type', 'car_make', 'car_model'], '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
+       ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
+        ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
+        ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
+        ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must be in the format O-XXXXX example:"O-12345"')
+        ->rule('optional',['emission_id','consumption_id'])
+        ->rule('regex', 'emission_id', '/^E-\d{5}$/')->message('{field} must be in the format E-XXXXX example:"E-12345"')
+        ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID',
+        'engine_size' => 'Engine Size',
+        'fuel_consumption_city' => 'Fuel Consumption City',
+        'fuel_consumption_hwy' => 'Fuel Consumption Highway',
+        'fuel_consumption_combined' => 'Fuel Consumption Combined'
+    ]);
+
+    self::validate($validator, $request);
+}
+
+public static function validateConsumptionsUpdate(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', [
+        'consumption_id',
+        'engine_size',
+        'fuel_consumption_city',
+        'fuel_consumption_hwy',
+        'fuel_consumption_combined',
+    ])->message('{field} is required')
+        ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
+        ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
+        ->rule('regex', ['car_name','engine_type', 'car_make', 'car_model'], '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
+       ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
+        ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
+        ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
+        ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must be in the format O-XXXXX example:"O-12345"')
+        ->rule('optional',['emission_id','consumption_id'])
+        ->rule('regex', 'emission_id', '/^E-\d{5}$/')->message('{field} must be in the format E-XXXXX example:"E-12345"')
+        ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID',
+        'engine_size' => 'Engine Size',
+        'fuel_consumption_city' => 'Fuel Consumption City',
+        'fuel_consumption_hwy' => 'Fuel Consumption Highway',
+        'fuel_consumption_combined' => 'Fuel Consumption Combined'
+    ]);
+
+
+}
+
+public static function validateConsumptionsDeletion(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', 'consumption_id')->message('{field} is required')
+        ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID'
+    ]);
+
+    self::validate($validator, $request);
+}
+
 }

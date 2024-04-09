@@ -42,4 +42,23 @@ class ConsumptionModel extends BaseModel
         $sql = "SELECT * FROM consumptions WHERE consumption_id = :consumption_id";
         return ['consumption' => $this->fetchSingle($sql, ['consumption_id' => $consumption_id])];
     }
+
+    public function createConsumption(array $consumptions) : mixed {
+        return $this->insert("consumptions", $consumptions); 
+    }
+
+    public function updateConsumptions(array $consumption_data, $consumption_id) : mixed {
+        return $this->update(
+            "consumptions",
+            $consumption_data,
+            ["consumption_id" => $consumption_id]
+        );
+    }
+
+    public function deleteConsumption($consumption_id) : mixed {
+        return $this->delete(
+            "consumptions",
+            ["consumption_id" => $consumption_id]
+        );
+    }
 }
