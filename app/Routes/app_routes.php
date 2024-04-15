@@ -89,6 +89,15 @@ $app->get('/emissions/{emission_id}', [EmissionController::class, 'handleGetEmis
 $app->get('/consumptions', [ConsumptionController::class, 'handleAllConsumptions']);
 $app->get('/consumptions/{consumption_id}', [ConsumptionController::class, 'handleGetConsumptionInfo']);
 
+//* ROUTE: POST /consumptions
+$app->post('/consumptions', [ConsumptionController::class, 'handleCreateConsumptions']);
+
+//* ROUTE: PUT /consumptions
+$app->put('/consumptions', [ConsumptionController::class, 'handleUpdateConsumptions']);
+
+//* ROUTE: DELETE /consumptions
+$app->delete('/consumptions', [ConsumptionController::class, 'handleDeleteConsumptions']);
+
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
