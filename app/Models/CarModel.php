@@ -144,7 +144,7 @@ class CarModel extends BaseModel
     public function deleteCar($car_id) : mixed {
         return $this->delete(
             "cars",
-            ["car_id" => $car_id]
+            $car_id
         );
     }
 }

@@ -148,7 +148,7 @@ public static function validateCarsCreation(array $data, $request): void
         ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
         ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
         ->rule('regex', 'car_id', '/^C-\d{5}$/')->message('{field} must be in the format C-XXXXX example:"C-12345"')
-        ->rule('regex', ['car_name','engine_type', 'car_make', 'car_model'], '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message('{field} accepts only alphanumeric characters, spaces, hyphens, and underscores')
+        ->rule('regex', ['car_name','engine_type', 'car_make', 'car_model'], '/^[A-Za-z0-9]+(?:[\s\-_][A-Za-z0-9]+)*$/')->message("{field} accepts only alphanumeric characters, spaces, hyphens, and underscores, can't end with them")
        ->rule('min', ['cylinders','horsepower'], '0')->message('{field} cannot be less than 0')
         ->rule('min', 'year', '1950')->message('{field} cannot be less than 1950')
         ->rule('regex', 'deal_id', '/^D-\d{5}$/')->message('{field} must be in the format D-XXXXX example:"D-12345"')
@@ -255,7 +255,7 @@ public static function validateCarsDeletion(array $data, $request): void
     $validator->labels([
         'car_id' => 'Car ID'
     ]);
-
+    
     self::validate($validator, $request);
 }
 
