@@ -39,7 +39,7 @@ class Validation
         }
     }*/
 
-    public static function validateOwners($data, $request): void
+    public static function validateOwnersCreation($data, $request): void
     {
         $validator = new Validator($data);
         $validator->rule('required', [
@@ -54,12 +54,12 @@ class Validation
             'insurance_id'
         ])->message('{field} is required')
             ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must start with {O-} and end with 5 numeric values')
-            ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must start with {O-} and end with 5 numeric values')
-            ->rule('regex', ['name', 'country', 'city'], '/^[a-zA-Z\s]+$/')->message('{field} must not have special characters or numbers')
+            ->rule('regex', ['name', 'country', 'city'], '/^[A-Za-z]+(?:[\s\-_][A-Za-z]+)*$/')->message('{field} must not have special characters or numbers')
             ->rule('regex', 'driver_gender', '/^(male|female)$/i')->message('{field} cannot be anything other than male or female')
             ->rule('regex', 'insurance_id', '/^I-\d{5}$/')->message('{field} must start with {I-} and end with 5 numeric values')
             ->rule('email', 'email')->message('{field} is not a valid')
-            ->rule('alphaNum', 'postal_code')->message('{field} is not a valid')
+            ->rule('integer', 'postal_code')->message('{field} is not a valid')
+            ->rule('length', 'postal_code', '5')->message('{field} must only have 5 digits')
             ->rule('integer', 'driver_age')->message('{field} must be an integer')
             ->rule('min', 'driver_age', '18')->message('{field} cannot be less than 18')
             ->rule('max', 'driver_age', '100')->message('{field} cannot be greater than 100');
@@ -79,6 +79,56 @@ class Validation
         self::validate($validator, $request);
     }
 
+    public static function validateOwnersUpdate($data, $request): void
+    {
+        $validator = new Validator($data);
+        $validator->rule('required', [
+            'name',
+            'email',
+            'postal_code',
+            'country',
+            'city',
+            'driver_age',
+            'driver_gender',
+            'insurance_id'
+        ])->message('{field} is required')
+            ->rule('regex', ['name', 'country', 'city'], '/^[A-Za-z]+(?:[\s\-_][A-Za-z]+)*$/')->message('{field} must not have special characters or numbers')
+            ->rule('regex', 'driver_gender', '/^(male|female)$/i')->message('{field} cannot be anything other than male or female')
+            ->rule('regex', 'insurance_id', '/^I-\d{5}$/')->message('{field} must start with {I-} and end with 5 numeric values')
+            ->rule('email', 'email')->message('{field} is not a valid')
+            ->rule('integer', 'postal_code')->message('{field} is not a valid')
+            ->rule('length', 'postal_code', '5')->message('{field} must only have 5 digits')
+            ->rule('integer', 'driver_age')->message('{field} must be an integer')
+            ->rule('min', 'driver_age', '18')->message('{field} cannot be less than 18')
+            ->rule('max', 'driver_age', '100')->message('{field} cannot be greater than 100');
+
+
+        $validator->labels([
+            'name' => 'Name',
+            'email' => 'Email address',
+            'postal_code' => 'Postal code',
+            'country' => 'Country',
+            'city' => 'City',
+            'driver_age' => 'Driver age',
+            'driver_gender' => 'Driver gender',
+            'insurance_id' => 'Insurance ID'
+        ]);
+        self::validate($validator, $request);
+    }
+
+    public static function validateOwnersDeletion($data, $request): void
+    {
+
+        $validator = new Validator($data);
+        $validator->rule('required', 'owner_id')->message('{field} is required')
+            ->rule('regex', 'owner_id', '/^O-\d{5}$/')->message('{field} must start with {O-} and end with 5 numeric values');
+
+        $validator->labels([
+            'owner_id' => 'Owner ID'
+        ]);
+        self::validate($validator, $request);
+    }
+
     public static function validate($validator, $request): void
     {
         if (!$validator->validate()) {
@@ -86,12 +136,15 @@ class Validation
             if (str_contains($message, '  ')) {
                 $message = str_replace('  ', ' ', $message);
             }
+
             throw new HttpInvalidInputException(
                 $request,
                 $message
             );
         }
     }
+
+
 
     private static function buildRules(string $filter_name, array $rules): array
     {
@@ -256,6 +309,69 @@ public static function validateCarsDeletion(array $data, $request): void
         'car_id' => 'Car ID'
     ]);
     
+    self::validate($validator, $request);
+}
+
+public static function validateConsumptionCreation(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', [
+        'consumption_id',
+        'engine_size',
+        'fuel_consumption_city',
+        'fuel_consumption_hwy',
+        'fuel_consumption_combined',
+    ])->message('{field} is required')
+      ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"')
+      ->rule('integer', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'])->message('{field} must be an integer')
+      ->rule('min', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'], '0')->message('{field} cannot be less than 0');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID',
+        'engine_size' => 'Engine Size',
+        'fuel_consumption_city' => 'Fuel Consumption City',
+        'fuel_consumption_hwy' => 'Fuel Consumption Highway',
+        'fuel_consumption_combined' => 'Fuel Consumption Combined'
+    ]);
+
+    self::validate($validator, $request);
+}
+
+public static function validateConsumptionsUpdate(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', [
+        'consumption_id',
+        'engine_size',
+        'fuel_consumption_city',
+        'fuel_consumption_hwy',
+        'fuel_consumption_combined',
+    ])->message('{field} is required')
+      ->rule('integer', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'])->message('{field} must be an integer')
+      ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"')
+      ->rule('min', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'], '0')->message('{field} cannot be less than 0');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID',
+        'engine_size' => 'Engine Size',
+        'fuel_consumption_city' => 'Fuel Consumption City',
+        'fuel_consumption_hwy' => 'Fuel Consumption Highway',
+        'fuel_consumption_combined' => 'Fuel Consumption Combined'
+    ]);
+
+    self::validate($validator, $request);
+}
+
+public static function validateConsumptionsDeletion(array $data, $request): void
+{
+    $validator = new Validator($data);
+    $validator->rule('required', 'consumption_id')->message('{field} is required')
+              ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
+
+    $validator->labels([
+        'consumption_id' => 'Consumption ID'
+    ]);
+
     self::validate($validator, $request);
 }
 

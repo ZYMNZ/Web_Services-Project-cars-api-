@@ -155,4 +155,20 @@ class OwnerModel extends BaseModel
     {
         return $this->insert("owners", $data);
     }
+
+    public function updateOwners(array $owner_data, $owner_id)
+    {
+        return $this->update(
+            "owners",
+            $owner_data,
+            ["owner_id" => $owner_id]
+        );
+    }
+
+    public function deleteOwner($owner_id) : mixed {
+        return $this->delete(
+            "owners",
+            $owner_id
+        );
+    }
 }

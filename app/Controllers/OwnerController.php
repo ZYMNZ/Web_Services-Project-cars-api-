@@ -67,12 +67,9 @@ class OwnerController extends BaseController
 
     public function handleCreateOwners(Request $request, Response $response, array $uri_args): Response
     {
-        $cars = $request->getParsedBody();
-        //TODO Validate the received values using the Valitron (or your custom validation methods)
-
-
-        foreach ($cars as $key => $value) {
-            Validation::validateOwners($value, $request);
+        $owners = $request->getParsedBody();
+        foreach ($owners as $key => $value) {
+            Validation::validateOwnersCreation($value, $request);
             $this->owner_model->createOwner($value);
         }
         $response_data = array(
@@ -81,5 +78,48 @@ class OwnerController extends BaseController
         );
 
         return $this->makeResponse($response, $response_data,201);
+    }
+
+    public function handleUpdateOwners(Request $request, Response $response, array $uri_args): Response
+    {
+        $owners = $request->getParsedBody();
+        foreach($owners as $owner){
+            $owner_id = $owner['owner_id'];
+            unset($owner['owner_id']);
+            Validation::validateOwnersUpdate($owner, $request);
+            //! we're sending the data body without the id, we only need the id to know which car[row] to update
+            $this->owner_model->updateOwners($owner, $owner_id);
+        }
+
+        $response_data = array(
+            "code" => "success",
+            "message" => "the specified owners have been updated successfully!"
+        );
+
+        return $this->makeResponse(
+            $response,
+            $response_data,
+            201
+        );
+    }
+
+    public function handleDeleteOwners(Request $request, Response $response, array $uri_args): Response
+    {
+        $owners = $request->getParsedBody();
+
+        foreach ($owners as $owner_id) {
+            Validation::validateOwnersDeletion($owner_id, $request);
+            $this->owner_model->deleteOwner($owner_id);
+        }
+
+        $response_data = array(
+            "code" => "success",
+            "message" => "the specified owners have been deleted successfully!"
+        );
+
+        return $this->makeResponse(
+            $response,
+            $response_data
+        );
     }
 }

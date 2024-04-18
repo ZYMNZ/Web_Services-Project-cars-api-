@@ -64,6 +64,12 @@ $app->get('/owners/{owner_id}/violations', [OwnerController::class, 'handleGetOw
 //* ROUTE: POST /owners
 $app->post('/owners', [OwnerController::class, 'handleCreateOwners']);
 
+//* ROUTE: PUT /owners
+$app->put('/owners', [OwnerController::class, 'handleUpdateOwners']);
+
+//* ROUTE: DELETE /owners
+$app->delete('/owners', [OwnerController::class, 'handleDeleteOwners']);
+
 
 //* ROUTE: GET /violations
 $app->get('/violations', [ViolationController::class, 'handleAllViolations']);
@@ -82,6 +88,15 @@ $app->get('/emissions/{emission_id}', [EmissionController::class, 'handleGetEmis
 //* ROUTE: GET /consumption
 $app->get('/consumptions', [ConsumptionController::class, 'handleAllConsumptions']);
 $app->get('/consumptions/{consumption_id}', [ConsumptionController::class, 'handleGetConsumptionInfo']);
+
+//* ROUTE: POST /consumptions
+$app->post('/consumptions', [ConsumptionController::class, 'handleCreateConsumptions']);
+
+//* ROUTE: PUT /consumptions
+$app->put('/consumptions', [ConsumptionController::class, 'handleUpdateConsumptions']);
+
+//* ROUTE: DELETE /consumptions
+$app->delete('/consumptions', [ConsumptionController::class, 'handleDeleteConsumptions']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
