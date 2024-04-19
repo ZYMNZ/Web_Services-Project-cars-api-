@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Cars",
-    "dateExported": "2024-04-07T21:15:57.971Z",
+    "dateExported": "2024-04-19T03:14:36.178Z",
     "version": "1.1",
     "folders": [
         {
@@ -175,15 +175,13 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-06T16:14:03.223Z",
-            "modified": "2024-04-07T21:15:27.161Z",
+            "modified": "2024-04-19T03:14:07.261Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "[\n  {\n    \"car_id\": \"C-00021\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"0\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"electric\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"deal_id\": \"D-00008\"\n  },\n  {\n    \"car_id\": \"C-00022\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"4\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"gas\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"emission_id\": \"E-00006\",\n    \"consumption_id\": \"FC-00006\",\n    \"deal_id\": \"D-00008\"\n  }\n]",
+                "raw": "[\n  {\n    \"car_id\": \"C-00022\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"0\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"electric\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"deal_id\": \"D-00008\"\n  },\n  {\n    \"car_id\": \"C-00023\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"4\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"gas\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"emission_id\": \"E-00006\",\n    \"consumption_id\": \"FC-00006\",\n    \"deal_id\": \"D-00008\"\n  }\n]",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "b1087318-5c25-43cf-aff2-4dfe11d0f9fc",
@@ -194,15 +192,13 @@
             "method": "DELETE",
             "sortNum": 10000,
             "created": "2024-04-07T05:38:13.266Z",
-            "modified": "2024-04-07T05:39:15.888Z",
+            "modified": "2024-04-18T14:12:14.462Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "[\n  {\n    \"car_id\": \"C-00021\"\n  }\n]",
+                "raw": "[\n  {\n    \"car_id\": \"C-00022\"\n  },\n  {\n    \"car_id\": \"C-00023\"\n  }\n]",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "a7160826-c5fd-450d-acc1-8c67ecd55a6a",
@@ -213,15 +209,13 @@
             "method": "PUT",
             "sortNum": 10000,
             "created": "2024-04-07T05:38:18.248Z",
-            "modified": "2024-04-07T20:20:58.954Z",
+            "modified": "2024-04-18T14:08:58.762Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "[\n  {\n    \"car_id\": \"C-00021\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"4\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"gas\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"deal_id\": \"D-00008\"\n  }\n]",
+                "raw": "[\n  {\n    \"car_id\": \"C-00021\",\n    \"car_name\": \"Lucid Air\",\n    \"cylinders\": \"4\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2023\",\n    \"engine_type\": \"gas\",\n    \"car_make\": \"Lucid\",\n    \"car_model\": \"Air\",\n    \"is_fuel_economic\": true,\n    \"owner_id\": \"O-00006\",\n    \"emission_id\": \"E-00005\",\n    \"consumption_id\": \"FC-00005\",\n    \"deal_id\": \"D-00008\"\n  },\n  {\n    \"car_id\": \"C-00023\",\n    \"car_name\": \"honda civic\",\n    \"cylinders\": \"3\",\n    \"horsepower\": \"1050\",\n    \"year\": \"2022\",\n    \"engine_type\": \"gas\",\n    \"car_make\": \"honda\",\n    \"car_model\": \"civic\",\n    \"is_fuel_economic\": false,\n    \"owner_id\": \"O-00006\",\n    \"emission_id\": \"E-00006\",\n    \"consumption_id\": \"FC-00006\",\n    \"deal_id\": \"D-00008\"\n  }\n]",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "ae2d136d-9517-4607-955c-297946194fa2",
