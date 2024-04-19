@@ -13,8 +13,6 @@ class OwnerModel extends BaseModel
     {
         $sql = "SELECT * FROM owners WHERE 1";
 
-        Validation::validateOwners($filters, $request);
-
         if (isset($filters['name'])) {
             $sql .= " AND name LIKE CONCAT(:name,'%')";
             $filters_values['name'] = $filters['name'];

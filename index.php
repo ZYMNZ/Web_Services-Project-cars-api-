@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Slim\Factory\AppFactory;
+use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
 define('APP_BASE_DIR',  __DIR__);
 
@@ -22,6 +23,7 @@ $app = AppFactory::create();
 //TODO: Add the middleware here.
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+$app->add(new ContentNegotiationMiddleware());
 
 //!NOTE: the error handling middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
