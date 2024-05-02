@@ -6,10 +6,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\AccountsController;
 use Vanier\Api\Controllers\CarController;
 use Vanier\Api\Controllers\ConsumptionController;
 use Vanier\Api\Controllers\DealController;
 use Vanier\Api\Controllers\EmissionController;
+use Vanier\Api\Controllers\FuelExpenseController;
 use Vanier\Api\Controllers\InsuranceController;
 use Vanier\Api\Controllers\OwnerController;
 use Vanier\Api\Controllers\ViolationController;
@@ -97,6 +99,13 @@ $app->put('/consumptions', [ConsumptionController::class, 'handleUpdateConsumpti
 
 //* ROUTE: DELETE /consumptions
 $app->delete('/consumptions', [ConsumptionController::class, 'handleDeleteConsumptions']);
+
+//* ROUTE POST /expense
+$app->post("/expense", [FuelExpenseController::class, 'handleGetFuelExpense']);
+
+//* ROUTE POST /account
+$app->post("/account", [AccountsController::class, 'handleCreateAccount']);
+
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
