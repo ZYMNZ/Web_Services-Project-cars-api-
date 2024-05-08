@@ -28,7 +28,14 @@ class AccountsController extends BaseController
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
         if (empty($account_data)) {
-            return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
+            return $this->makeResponse(
+                $response,
+                ['error' => true, 'message' => 'No data was provided in the request.'],
+                400
+            );
+
+            // return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
+            
         }
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
         // 2) Data was provided, we attempt to create an account for the user.                
@@ -38,10 +45,12 @@ class AccountsController extends BaseController
         //}
         
         // 3) A new account has been successfully created. 
-        $response = array(
+        $response_data = array(
             "code" => "success",
             "message" => "A new account has been successfully created"
         );
+
+        $response = $this->makeResponse($response,$response_data,201);
         // Prepare and return a response.  
         return $response;
     }
