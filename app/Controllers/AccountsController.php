@@ -24,7 +24,7 @@ class AccountsController extends BaseController
     }
     public function handleCreateAccount(Request $request, Response $response)
     {
-       $account_data = $request->getParsedBody();
+     $account_data = $request->getParsedBody();
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
         if (empty($account_data)) {
