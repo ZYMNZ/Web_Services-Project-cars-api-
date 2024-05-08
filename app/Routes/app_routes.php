@@ -106,6 +106,8 @@ $app->post("/expense", [FuelExpenseController::class, 'handleGetFuelExpense']);
 //* ROUTE POST /account
 $app->post("/account", [AccountsController::class, 'handleCreateAccount']);
 
+//* ROUTE POST /token
+$app->post("/token", [AccountsController::class, 'handleGenerateToken']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

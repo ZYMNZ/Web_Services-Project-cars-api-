@@ -64,13 +64,28 @@ class AccountsController extends BaseController
         // TODO: add the account role to be included as JWT private claims.
         //-- 5.a): Prepare the private claims: user_id, email, and role.
 
+        $jwtPayload = [
+            "first_name" => "Spyro",
+            "last_name" => "Goumas",
+            "email" => "spyrogoumas@yahoo.com",
+            "role" => "admin"
+        ];
+
         // Current time stamp * 60 seconds        
         $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
         //--
+        
+        $jwt = JWTManager::generateJWT($account_data, $expires_in); 
+            $jwt_info = array(
+                "status" => "success",
+                "token" => $jwt,
+                "message" => "Logged in successfully"
+            ); 
+
         // 5.c) Prepare and return a response containing the jwt.
-        return $response;
+        return $this->makeResponse($response, $jwt_info, 201);
     }
 }
