@@ -50,6 +50,7 @@ class AccountsModel extends BaseModel
         return null;
     }
 
+
     /**
      * Creates a new user with the provide user info. 
      * 
