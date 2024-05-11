@@ -11,15 +11,15 @@ class FuelExpenseHelper
     public static function getFuelExpense(Request $request, $annualMilesDriven,$milesPerGallon,$pricePerGallon){
         //TODO validation
 
-        if (!is_numeric($annualMilesDriven,$milesPerGallon,$pricePerGallon)) {
+        if (!is_numeric($annualMilesDriven) || !is_numeric($milesPerGallon) || !is_numeric($pricePerGallon)) {
             throw new HttpInvalidInputException(
                 $request,
-                 "errorrr"
+                "Invalid input! Enter numbers only please!"
             );
         }
-        $annualFuelExpense = ($annualMilesDriven / $milesPerGallon) * $pricePerGallon;
-
-        return $annualFuelExpense;
+        $annualFuelCost = ($annualMilesDriven / $milesPerGallon) * $pricePerGallon;
+        $formattedFuelCost = number_format($annualFuelCost, 2);
+        return "Annual Fuel Cost: $" . $formattedFuelCost;
     }
 
 }
