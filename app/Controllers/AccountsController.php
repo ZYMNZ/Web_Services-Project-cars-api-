@@ -5,8 +5,7 @@ namespace Vanier\Api\Controllers;
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpException;
-use Vanier\Api\Exceptions\HttpInvalidAccountException;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountsModel;
@@ -45,7 +44,7 @@ class AccountsController extends BaseController
         $email_exits = $this->accounts_model->isAccountExist($account_data['email']);
 //        var_dump($account_data['email']);exit;
         if (!empty($email_exits)){
-            throw new HttpInvalidAccountException(
+            throw new HttpBadRequestException(
                 $request,
                 "The email already exists"
             );
