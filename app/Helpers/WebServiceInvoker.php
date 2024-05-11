@@ -15,7 +15,7 @@ class WebServiceInvoker
     /**
      * @throws GuzzleException
      */
-    public function invokeURI(string $resource_uri) : mixed{
+    public function carApi(string $resource_uri) : mixed{
         $client = new Client($this->client_options);
         $response = $client->get($resource_uri);
 
@@ -35,8 +35,14 @@ class WebServiceInvoker
         $cars = json_decode($resource_data);
         $parsed_cars = array();
         //THIS IS JUST A DEFAULT STRUCTURE (MIGHT BE CHANGED ACCORDING TO THE *API*)
-        foreach($cars as $key => $cars){
-            //WE NEED TO DECIDE WHICH PROPERTIES TO DISPLAY!
+        foreach($cars->results as $key => $car){
+            $parsed_cars[$key]["make"] = $car->make;
+            $parsed_cars[$key]["model"] = $car->model;
+            $parsed_cars[$key]["cylinders"] = $car->cylinders;
+            $parsed_cars[$key]["drive"] = $car->drive;
+            $parsed_cars[$key]["fueltype1"] = $car->fueltype1;
+            $parsed_cars[$key]["trany"] = $car->trany;
+            $parsed_cars[$key]["year"] = $car->year;
 
         }
         return $parsed_cars;
