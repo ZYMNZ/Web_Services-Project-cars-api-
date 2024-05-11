@@ -24,11 +24,18 @@ class AccountsController extends BaseController
     }
     public function handleCreateAccount(Request $request, Response $response)
     {
-        $account_data = $request->getParsedBody();
+     $account_data = $request->getParsedBody();
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
         if (empty($account_data)) {
-            return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
+            return $this->makeResponse(
+                $response,
+                ['error' => true, 'message' => 'No data was provided in the request.'],
+                400
+            );
+
+            // return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
+            
         }
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
         // 2) Data was provided, we attempt to create an account for the user.                
@@ -38,10 +45,12 @@ class AccountsController extends BaseController
         //}
         
         // 3) A new account has been successfully created. 
-        $response = array(
+        $response_data = array(
             "code" => "success",
             "message" => "A new account has been successfully created"
         );
+
+        $response = $this->makeResponse($response,$response_data,201);
         // Prepare and return a response.  
         return $response;
     }
@@ -64,13 +73,28 @@ class AccountsController extends BaseController
         // TODO: add the account role to be included as JWT private claims.
         //-- 5.a): Prepare the private claims: user_id, email, and role.
 
+        $jwtPayload = [
+            "first_name" => "Spyro",
+            "last_name" => "Goumas",
+            "email" => "spyrogoumas@yahoo.com",
+            "role" => "admin"
+        ];
+
         // Current time stamp * 60 seconds        
         $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
         //--
+        
+        $jwt = JWTManager::generateJWT($account_data, $expires_in); 
+            $jwt_info = array(
+                "status" => "success",
+                "token" => $jwt,
+                "message" => "Logged in successfully"
+            ); 
+
         // 5.c) Prepare and return a response containing the jwt.
-        return $response;
+        return $this->makeResponse($response, $jwt_info, 201);
     }
 }
