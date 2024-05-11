@@ -6,6 +6,7 @@ use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpException;
+use Vanier\Api\Exceptions\HttpInvalidAccountException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountsModel;
@@ -40,6 +41,15 @@ class AccountsController extends BaseController
 
         }
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
+//        var_dump("before the thingy");
+        $email_exits = $this->accounts_model->isAccountExist($account_data['email']);
+//        var_dump($account_data['email']);exit;
+        if (!empty($email_exits)){
+            throw new HttpInvalidAccountException(
+                $request,
+                "The email already exists"
+            );
+        }
         // 2) Data was provided, we attempt to create an account for the user.                
         $this->accounts_model->createAccount($account_data);
         //if (!$new_account_id) {

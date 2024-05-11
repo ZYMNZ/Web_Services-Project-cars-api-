@@ -29,7 +29,7 @@ class AccountsModel extends BaseModel
     public function isAccountExist($email)
     {
         $sql = "SELECT * FROM $this->table_name WHERE email= :email";
-        return $this->fetchSingle($sql, [":email" => $email]);
+        return $this->fetchSingle($sql, ["email" => $email]);
     }
 
     /**
