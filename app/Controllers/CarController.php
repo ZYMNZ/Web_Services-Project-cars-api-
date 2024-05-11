@@ -2,6 +2,8 @@
 
 namespace Vanier\Api\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Vanier\Api\Helpers\WebServiceInvoker;
 use Vanier\Api\Models\CarModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -17,10 +19,21 @@ class CarController extends BaseController
         $this->pattern = "/^C-\d{5}$/";
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function handleGetAllCars(Request $request, Response $response, array $uri_args): Response {
         $filters = $request->getQueryParams();
         $this->cars_model->validatePagination($request, $filters);
         $data = $this->cars_model->getAllCars($filters);
+
+        //*invoker
+        $wa_invoker = new WebServiceInvoker();
+        $uri = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?limit=20";
+        $cars = $wa_invoker->carApi($uri);
+        //!checked the update the response; just in case
+        $data["cars_api"] = $cars;
+
         return $this->makeResponse($response, $data);
     }
 
