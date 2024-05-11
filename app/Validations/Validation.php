@@ -375,4 +375,24 @@ public static function validateConsumptionsDeletion(array $data, $request): void
     self::validate($validator, $request);
 }
 
+    public static function validateFuelExpense(array $data, $request): void
+    {
+        $validator = new Validator($data);
+        $validator->rule('required', [
+            'annual_miles_driven',
+            'miles_per_gallon',
+            'price_per_gallon',
+        ])->message('{field} is required')
+            ->rule('regex', 'annual_miles_driven', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
+            ->rule('regex', 'miles_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
+            ->rule('regex', 'price_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number');
+
+        $validator->labels([
+            'annual_miles_driven' => 'Annual Miles Driven',
+            'miles_per_gallon' => 'Miles Per Gallon',
+            'price_per_gallon' => 'Price Per Gallon'
+        ]);
+        self::validate($validator, $request);
+    }
+
 }

@@ -18,7 +18,8 @@ class FuelExpenseController extends BaseController
         $milesPerGallon = $expense['miles_per_gallon'];
         $pricePerGallon = $expense['price_per_gallon'];
 
-        $result = FuelExpenseHelper::getFuelExpense($request,$annualMilesDriven,$milesPerGallon,$pricePerGallon);
+//        $result = FuelExpenseHelper::getFuelExpense($expense,$request);
+        $result = FuelExpenseHelper::getFuelExpense($request, $annualMilesDriven,$milesPerGallon,$pricePerGallon);
 
         $response_data = array(
             "annual_miles_driven" => $expense['annual_miles_driven'], 
