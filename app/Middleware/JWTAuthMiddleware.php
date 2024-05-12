@@ -2,14 +2,12 @@
 
 namespace Vanier\Api\Middleware;
 
-use Firebase\JWT\JWT;
 use LogicException;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpUnauthorizedException;
 use UnexpectedValueException;
 
 use Vanier\Api\Helpers\JWTManager;
@@ -39,23 +37,22 @@ class JWTAuthMiddleware implements MiddlewareInterface
         $parsed_token = str_replace('Bearer ', '', $token);
         //-- 4) Try to decode the JWT token
         //@see https://github.com/firebase/php-jwt#exception-handling
+        $decoded = "";
         try {
-            $key = 'example_key';
-            $payload = [
-                'iss' => 'http://example.org',
-                'aud' => 'http://example.com',
-                'iat' => 1356999524,
-                'nbf' => 1357000000
-            ];
-            $decoded = JWT::decode($payload, new Key($key, 'HS256'));
+            $decoded = JWTManager::decodeJWT($parsed_token, JWTManager::SIGNATURE_ALGO);
         } catch (LogicException $e) {
             // errors having to do with environmental setup or malformed JWT Keys
+            echo 'LogicException: ' . $e->getMessage();
         } catch (UnexpectedValueException $e) {
             // errors having to do with JWT signature and claims
+            echo 'UnexpectedValueException: ' . $e->getMessage();
         }
         // --5) Access to POST, PUT and DELETE operations must be restricted:
         //     Only admin accounts can be authorized.
-
+        if (!str_contains($request->getMethod(), 'GET') && $decoded['role'] != 'admin') {
+            throw new HttpForbiddenException($request, 'Insufficient permission!');
+        }
+//        $decoded['role'];
         // If the request's method is: POST, PUT, or DELETE., only admins are allowed.
         // throw new HttpForbiddenException($request, 'Insufficient permission!');
 
