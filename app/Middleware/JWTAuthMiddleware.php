@@ -3,6 +3,8 @@
 namespace Vanier\Api\Middleware;
 
 use LogicException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -38,14 +40,15 @@ class JWTAuthMiddleware implements MiddlewareInterface
         //-- 4) Try to decode the JWT token
         //@see https://github.com/firebase/php-jwt#exception-handling
         $decoded = "";
+        $logger = new Logger('app');
         try {
             $decoded = JWTManager::decodeJWT($parsed_token, JWTManager::SIGNATURE_ALGO);
         } catch (LogicException $e) {
             // errors having to do with environmental setup or malformed JWT Keys
-            echo 'LogicException: ' . $e->getMessage();
+            $logger->error('LogicException: ' . $e->getMessage());
         } catch (UnexpectedValueException $e) {
             // errors having to do with JWT signature and claims
-            echo 'UnexpectedValueException: ' . $e->getMessage();
+            $logger->error('UnexpectedValueException: ' . $e->getMessage());
         }
         // --5) Access to POST, PUT and DELETE operations must be restricted:
         //     Only admin accounts can be authorized.
@@ -63,7 +66,26 @@ class JWTAuthMiddleware implements MiddlewareInterface
            (such as logging, etc.). Use the APP_JWT_TOKEN_KEY as attribute name. 
            @see: Slim's documentation for more details about storing attributes in the request object. 
          */
-        
+//        var_dump("");
+        $request = $request->withAttribute("APP_JWT_TOKEN_KEY", $parsed_token);
+
+        $test = $request->getAttribute("APP_JWT_TOKEN_KEY");
+//        var_dump($test);exit;
+
+        //? Step1) instantiate and configure a logger.
+        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
+        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
+//        var_dump(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE);
+
+        //?2) we can now log some access info:
+        $client_ip = $_SERVER["REMOTE_ADDR"];
+        $method = $request->getMethod();
+        $uri = $request->getUri()->getPath();
+        $log_record = $client_ip. ' ' .$method. ' '. $uri;
+        //3) prepare extra info
+        $extras = $request->getQueryParams();
+        $logger->info($log_record,$extras);
+
         //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
         // middleware in the middleware stack. 
         return $handler->handle($request);
