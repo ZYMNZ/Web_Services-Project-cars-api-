@@ -41,7 +41,7 @@ class AccountsModel extends BaseModel
     public function isPasswordValid($email, $input_password)
     {
         $sql = "SELECT * FROM $this->table_name WHERE email= :email";
-        $account = $this->fetchSingle($sql, [":email" => $email]);
+        $account = $this->fetchSingle($sql, ["email" => $email]);
         if ($account && is_array($account)) {
             if (password_verify($input_password, $account['password'])) {
                 return $account;

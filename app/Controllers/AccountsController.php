@@ -10,6 +10,7 @@ use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountsModel;
 
+
 /**
  * Handles requests for creating new accounts and 
  * generating JWTs.
@@ -79,22 +80,34 @@ class AccountsController extends BaseController
 
         }
         //-- 2) Retrieve and validate the account credentials.
+//        $account = $this->accounts_model->isPasswordValid($account_data["email"], $account_data["password"]);
+        $email_exits = $this->accounts_model->isAccountExist($account_data['email']);
+        if (!$email_exits) {
+            var_dump('cscs'); exit;
+            //error
+        }
         //-- 3) Is there an account matching the provided email address in the DB?
         //-- 4) If so, verify whether the provided password is valid.
-        //if (!$db_account) {
+        $db_account = $this->accounts_model->isPasswordValid($account_data["email"], $account_data["password"]);
+        if (!$db_account) {
             //-- 4.a) If the password is invalid --> prepare and return a response with a message indicating the 
-            // reason.            
-        //}
+            // reason.
+            $response_data = array(
+                "code" => "Error",
+                "message" => "Wrong password"
+            );
+            // Prepare and return a response.
+            return $this->makeResponse($response, $response_data,201);
+        }
         //-- 5) Valid account detected => Now, we return an HTTP response containing
         // the newly generated JWT.
         // TODO: add the account role to be included as JWT private claims.
         //-- 5.a): Prepare the private claims: user_id, email, and role.
 
         $jwtPayload = [
-            "first_name" => "Spyro",
-            "last_name" => "Goumas",
-            "email" => "spyrogoumas@yahoo.com",
-            "role" => "admin"
+            "sub" => $db_account['user_id'],
+            "email" => $db_account['email'],
+            "role" => $db_account['role']
         ];
 
         // Current time stamp * 60 seconds
@@ -104,11 +117,11 @@ class AccountsController extends BaseController
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
         //--
 
-        $jwt = JWTManager::generateJWT($account_data, $expires_in);
+        $jwt = JWTManager::generateJWT($jwtPayload, $expires_in);
             $jwt_info = array(
                 "status" => "success",
                 "token" => $jwt,
-                "message" => "Logged in successfully"
+                "message" => "Logged is successfully"
             );
 
         // 5.c) Prepare and return a response containing the jwt.
