@@ -41,14 +41,18 @@ class JWTAuthMiddleware implements MiddlewareInterface
         //@see https://github.com/firebase/php-jwt#exception-handling
         $decoded = "";
         $logger = new Logger('app');
+        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
+        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
         try {
             $decoded = JWTManager::decodeJWT($parsed_token, JWTManager::SIGNATURE_ALGO);
         } catch (LogicException $e) {
             // errors having to do with environmental setup or malformed JWT Keys
             $logger->error('LogicException: ' . $e->getMessage());
+//            echo "error in 1";
         } catch (UnexpectedValueException $e) {
             // errors having to do with JWT signature and claims
             $logger->error('UnexpectedValueException: ' . $e->getMessage());
+//            echo "error in 2";
         }
         // --5) Access to POST, PUT and DELETE operations must be restricted:
         //     Only admin accounts can be authorized.
@@ -60,11 +64,11 @@ class JWTAuthMiddleware implements MiddlewareInterface
         // throw new HttpForbiddenException($request, 'Insufficient permission!');
 
         //-- 6) The client application has been authorized:
-        /* 6.a) Now we need to store the token payload in the request object. The payload is needed for logging purposes and 
-           needs to be passed as an attribute to the request's handling callbacks.  
-           This will allow the target resource's callback to access the token payload for various purposes 
-           (such as logging, etc.). Use the APP_JWT_TOKEN_KEY as attribute name. 
-           @see: Slim's documentation for more details about storing attributes in the request object. 
+        /* 6.a) Now we need to store the token payload in the request object. The payload is needed for logging purposes and
+           needs to be passed as an attribute to the request's handling callbacks.
+           This will allow the target resource's callback to access the token payload for various purposes
+           (such as logging, etc.). Use the APP_JWT_TOKEN_KEY as attribute name.
+           @see: Slim's documentation for more details about storing attributes in the request object.
          */
 //        var_dump("");
         $request = $request->withAttribute("APP_JWT_TOKEN_KEY", $parsed_token);
@@ -73,8 +77,6 @@ class JWTAuthMiddleware implements MiddlewareInterface
 //        var_dump($test);exit;
 
         //? Step1) instantiate and configure a logger.
-        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
-        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
 //        var_dump(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE);
 
         //?2) we can now log some access info:
