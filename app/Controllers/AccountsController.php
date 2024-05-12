@@ -83,8 +83,12 @@ class AccountsController extends BaseController
 //        $account = $this->accounts_model->isPasswordValid($account_data["email"], $account_data["password"]);
         $email_exits = $this->accounts_model->isAccountExist($account_data['email']);
         if (!$email_exits) {
-            var_dump('cscs'); exit;
-            //error
+            $response_data = array(
+                "code" => "Error",
+                "message" => "Account doesn't exist",
+            );
+            // Prepare and return a response.
+            return $this->makeResponse($response, $response_data,201);
         }
         //-- 3) Is there an account matching the provided email address in the DB?
         //-- 4) If so, verify whether the provided password is valid.

@@ -2,6 +2,7 @@
 
 namespace Vanier\Api\Middleware;
 
+use Firebase\JWT\JWT;
 use LogicException;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -26,16 +27,32 @@ class JWTAuthMiddleware implements MiddlewareInterface
               to create account and request a JWT token.
         */        
         // 1.a) If the request's uri contains /account or /token, handle the request:
-        //return $handler->handle($request);
+        $uriRoute = $request->getUri()->getPath();
+        if (str_contains($uriRoute,  '/account') ||
+            str_contains($uriRoute,  '/token'))
+        return $handler->handle($request);
 
         // If not:
         //-- 2) Retrieve the token from the request Authorization's header. 
-        
-        // 3) Parse the token: remove the "Bearer " word.        
-
+        $token = $request->getHeaderLine('Authorization');
+        // 3) Parse the token: remove the "Bearer " word.
+        $parsed_token = str_replace('Bearer ', '', $token);
         //-- 4) Try to decode the JWT token
         //@see https://github.com/firebase/php-jwt#exception-handling
-
+        try {
+            $key = 'example_key';
+            $payload = [
+                'iss' => 'http://example.org',
+                'aud' => 'http://example.com',
+                'iat' => 1356999524,
+                'nbf' => 1357000000
+            ];
+            $decoded = JWT::decode($payload, new Key($key, 'HS256'));
+        } catch (LogicException $e) {
+            // errors having to do with environmental setup or malformed JWT Keys
+        } catch (UnexpectedValueException $e) {
+            // errors having to do with JWT signature and claims
+        }
         // --5) Access to POST, PUT and DELETE operations must be restricted:
         //     Only admin accounts can be authorized.
 
