@@ -54,15 +54,25 @@ class WebServiceInvoker
         return $parsed_cars;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function invokeAPI2(string $resource_uri): array
     {
         $data = $this->carApi($resource_uri);
         $parsed_cars = array();
         //THIS IS JUST A DEFAULT STRUCTURE (MIGHT BE CHANGED ACCORDING TO THE *API*)
-//        foreach($data->results as $key => $car){
-//            $parsed_cars[$key]["make"] = $car->make;
-
-//        }
+        foreach($data as $key => $car){
+            $parsed_cars[$key]["make"] = $car->make;
+            $parsed_cars[$key]["model"] = $car->model;
+            $parsed_cars[$key]["year"] = $car->year;
+            $parsed_cars[$key]["color"] = $car->color;
+            $parsed_cars[$key]["mileage"] = $car->mileage;
+            $parsed_cars[$key]["price"] = $car->price;
+            $parsed_cars[$key]["transmission"] = $car->transmission;
+            $parsed_cars[$key]["engine"] = $car->engine;
+            $parsed_cars[$key]["features"] = $car->features;
+        }
         return $parsed_cars;
     }
     private function  returnError($code, $message):array{
