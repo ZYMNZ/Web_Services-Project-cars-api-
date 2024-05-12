@@ -32,10 +32,16 @@ class WebServiceInvoker
                 'Empty response received!',
             );
         }
-        $cars = json_decode($resource_data);
+        return json_decode($resource_data);
+
+    }
+
+    public function invokeAPI1(string $resource_uri): array
+    {
+        $data = $this->carApi($resource_uri);
         $parsed_cars = array();
         //THIS IS JUST A DEFAULT STRUCTURE (MIGHT BE CHANGED ACCORDING TO THE *API*)
-        foreach($cars->results as $key => $car){
+        foreach($data->results as $key => $car){
             $parsed_cars[$key]["make"] = $car->make;
             $parsed_cars[$key]["model"] = $car->model;
             $parsed_cars[$key]["cylinders"] = $car->cylinders;
@@ -45,6 +51,18 @@ class WebServiceInvoker
             $parsed_cars[$key]["year"] = $car->year;
 
         }
+        return $parsed_cars;
+    }
+
+    public function invokeAPI2(string $resource_uri): array
+    {
+        $data = $this->carApi($resource_uri);
+        $parsed_cars = array();
+        //THIS IS JUST A DEFAULT STRUCTURE (MIGHT BE CHANGED ACCORDING TO THE *API*)
+//        foreach($data->results as $key => $car){
+//            $parsed_cars[$key]["make"] = $car->make;
+
+//        }
         return $parsed_cars;
     }
     private function  returnError($code, $message):array{

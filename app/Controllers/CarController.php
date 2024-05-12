@@ -30,7 +30,7 @@ class CarController extends BaseController
         //*invoker
         $wa_invoker = new WebServiceInvoker();
         $uri = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?limit=20";
-        $cars = $wa_invoker->carApi($uri);
+        $cars = $wa_invoker->invokeAPI1($uri);
         //!checked the update the response; just in case
         $data["cars_api"] = $cars;
 
