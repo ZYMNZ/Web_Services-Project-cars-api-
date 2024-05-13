@@ -238,16 +238,7 @@ public static function validateCarsUpdate(array $data, $request): void
 {
     $validator = new Validator($data);
     $validator->rule('required', [
-        'car_name',
-        'cylinders',
-        'horsepower',
-        'year',
-        'engine_type',
-        'car_make',
-        'car_model',
-        'is_fuel_economic',
-        'owner_id',
-        'deal_id',
+
     ])->message('{field} is required')
         ->rule('integer', ['cylinders', 'horsepower', 'year'])->message('{field} must be an integer')
         ->rule('boolean', 'is_fuel_economic')->message('{field} must be a boolean')
