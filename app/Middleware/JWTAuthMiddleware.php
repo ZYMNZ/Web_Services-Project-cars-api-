@@ -2,6 +2,11 @@
 
 namespace Vanier\Api\Middleware;
 
+use DomainException;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException;
+use InvalidArgumentException;
 use LogicException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -9,10 +14,14 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpUnauthorizedException;
 use UnexpectedValueException;
+use Slim\Routing\RouteCollectorProxy;
 
 use Vanier\Api\Helpers\JWTManager;
+use Vanier\Api\Models\AccessLogModel;
 
 class JWTAuthMiddleware implements MiddlewareInterface
 {
@@ -28,9 +37,10 @@ class JWTAuthMiddleware implements MiddlewareInterface
         */        
         // 1.a) If the request's uri contains /account or /token, handle the request:
         $uriRoute = $request->getUri()->getPath();
-        if (str_contains($uriRoute,  '/account') ||
-            str_contains($uriRoute,  '/token'))
+        $route = substr($uriRoute, 9);
+        if ($route === "/account" || $route === "/token")
         return $handler->handle($request);
+
 
         // If not:
         //-- 2) Retrieve the token from the request Authorization's header. 
@@ -40,25 +50,38 @@ class JWTAuthMiddleware implements MiddlewareInterface
         //-- 4) Try to decode the JWT token
         //@see https://github.com/firebase/php-jwt#exception-handling
         $decoded = "";
-        $logger = new Logger('app');
-        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
-        $logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
+        $access_logger = new Logger('access');
+        $access_logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
+
+        $error_logger = new Logger('error');
+        $error_logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
         try {
             $decoded = JWTManager::decodeJWT($parsed_token, JWTManager::SIGNATURE_ALGO);
         } catch (LogicException $e) {
             // errors having to do with environmental setup or malformed JWT Keys
-            $logger->error('LogicException: ' . $e->getMessage());
+            $error_logger->error('LogicException: ' . $e->getMessage());
+            throw new HttpBadRequestException($request, 'Malformed Token');
 //            echo "error in 1";
         } catch (UnexpectedValueException $e) {
+            // provided JWT is malformed OR
+            // provided JWT is missing an algorithm / using an unsupported algorithm OR
+            // provided JWT algorithm does not match provided key OR
+            // provided key ID in key/key-array is empty or invalid.
             // errors having to do with JWT signature and claims
-            $logger->error('UnexpectedValueException: ' . $e->getMessage());
-//            echo "error in 2";
+            $error_logger->error($e->getMessage());
+            throw new HttpUnauthorizedException($request, 'Token Expired');
         }
         // --5) Access to POST, PUT and DELETE operations must be restricted:
         //     Only admin accounts can be authorized.
-        if (!str_contains($request->getMethod(), 'GET') && $decoded['role'] != 'admin') {
+//        var_dump($decoded); exit;
+//        var_dump($request->getMethod()); exit;
+        if ($request->getMethod() !== 'GET' && $decoded['role'] != 'admin') {
+            $error_logger->error('Insufficient permission access');
             throw new HttpForbiddenException($request, 'Insufficient permission!');
         }
+
+
+
 //        $decoded['role'];
         // If the request's method is: POST, PUT, or DELETE., only admins are allowed.
         // throw new HttpForbiddenException($request, 'Insufficient permission!');
@@ -86,7 +109,10 @@ class JWTAuthMiddleware implements MiddlewareInterface
         $log_record = $client_ip. ' ' .$method. ' '. $uri;
         //3) prepare extra info
         $extras = $request->getQueryParams();
-        $logger->info($log_record,$extras);
+        $access_logger->info($log_record,$extras);
+        $access_log_model = new AccessLogModel();
+        $access_log_model->createLogEntry($decoded, $route);
+
 
         //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
         // middleware in the middleware stack. 

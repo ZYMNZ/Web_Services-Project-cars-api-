@@ -109,13 +109,13 @@ class AccountsController extends BaseController
         //-- 5.a): Prepare the private claims: user_id, email, and role.
 
         $jwtPayload = [
-            "sub" => $db_account['user_id'],
+            "id" => $db_account['user_id'],
             "email" => $db_account['email'],
             "role" => $db_account['role']
         ];
 
         // Current time stamp * 60 seconds
-        $expires_in = time() + 30; //! NOTE: Expires in 1 minute.
+        $expires_in = time() + 2; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
