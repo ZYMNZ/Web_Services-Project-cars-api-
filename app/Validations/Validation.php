@@ -83,14 +83,6 @@ class Validation
     {
         $validator = new Validator($data);
         $validator->rule('required', [
-            'name',
-            'email',
-            'postal_code',
-            'country',
-            'city',
-            'driver_age',
-            'driver_gender',
-            'insurance_id'
         ])->message('{field} is required')
             ->rule('regex', ['name', 'country', 'city'], '/^[A-Za-z]+(?:[\s\-_][A-Za-z]+)*$/')->message('{field} must not have special characters or numbers')
             ->rule('regex', 'driver_gender', '/^(male|female)$/i')->message('{field} cannot be anything other than male or female')
