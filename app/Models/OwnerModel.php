@@ -166,7 +166,7 @@ class OwnerModel extends BaseModel
     public function deleteOwner($owner_id) : mixed {
         return $this->delete(
             "owners",
-            $owner_id
+            ["owner_id" => $owner_id]
         );
     }
 }

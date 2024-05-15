@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\OwnerModel;
+use Vanier\Api\Validations\OwnerValidation;
 use Vanier\Api\Validations\Validation;
 
 class OwnerController extends BaseController
@@ -69,7 +70,7 @@ class OwnerController extends BaseController
     {
         $owners = $request->getParsedBody();
         foreach ($owners as $key => $value) {
-            Validation::validateOwnersCreation($value, $request);
+            OwnerValidation::validateOwnersCreation($value, $request);
             $this->owner_model->createOwner($value);
         }
         $response_data = array(
@@ -84,10 +85,10 @@ class OwnerController extends BaseController
     {
         $owners = $request->getParsedBody();
         foreach($owners as $owner){
+            OwnerValidation::validateOwnersUpdate($owner, $request);
+            //! we're sending the data body without the id, we only need the id to know which car[row] to update
             $owner_id = $owner['owner_id'];
             unset($owner['owner_id']);
-            Validation::validateOwnersUpdate($owner, $request);
-            //! we're sending the data body without the id, we only need the id to know which car[row] to update
             $this->owner_model->updateOwners($owner, $owner_id);
         }
 
@@ -107,16 +108,39 @@ class OwnerController extends BaseController
     {
         $owners = $request->getParsedBody();
 
-        foreach ($owners as $owner_id) {
-            Validation::validateOwnersDeletion($owner_id, $request);
-            $this->owner_model->deleteOwner($owner_id);
+        OwnerValidation::validateOwnersDeletion($owners, $request);
+        $not_deleted_ids = [];
+        foreach ($owners as $key => $owner_id) {
+            $status = $this->owner_model->deleteOwner($owner_id);
+            if ($status == 0) {
+                $not_deleted_ids[] = $owner_id;
+            }
         }
+        if (count($owners) == 1 && count($not_deleted_ids) == 1) {
+            $response_data = array(
+                "code" => "failed",
+                "message" => "the specified owner has not been deleted successfully!"
+            );
+        } else if (count($owners) <= 0) {
+            $response_data = array(
+                "code" => "failed",
+                "message" => "there is/are no specified owner(s)!"
+            );
+        } else {
+            $message = "the specified owners have been deleted successfully";
+            if (count($not_deleted_ids) > 0) {
+                $response_data = array(
+                    "code" => "success",
+                    "message" => $message . " except " . implode(', ', $not_deleted_ids) . "!"
+                );
+            } else {
+                $response_data = array(
+                    "code" => "success",
+                    "message" => $message . "!"
+                );
+            }
 
-        $response_data = array(
-            "code" => "success",
-            "message" => "the specified owners have been deleted successfully!"
-        );
-
+        }
         return $this->makeResponse(
             $response,
             $response_data
