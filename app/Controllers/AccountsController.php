@@ -9,6 +9,8 @@ use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountsModel;
+use Vanier\Api\Validations\AccountValidation;
+use Vanier\Api\Validations\TokenValidation;
 
 
 /**
@@ -28,9 +30,9 @@ class AccountsController extends BaseController
     public function handleCreateAccount(Request $request, Response $response): Response
     {
         $account_data = $request->getParsedBody();
-        var_dump($account_data);
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
+        AccountValidation::validateAccountCreation($account_data, $request);
         if (empty($account_data)) {
             return $this->makeResponse(
                 $response,
@@ -80,6 +82,7 @@ class AccountsController extends BaseController
             );
 
         }
+        TokenValidation::validateTokenCreation($account_data, $request);
         //-- 2) Retrieve and validate the account credentials.
 //        $account = $this->accounts_model->isPasswordValid($account_data["email"], $account_data["password"]);
         $email_exits = $this->accounts_model->isAccountExist($account_data['email']);
