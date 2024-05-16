@@ -64,12 +64,11 @@ class ConsumptionController extends BaseController
     {
         $consumptions = $request->getParsedBody();
 
-
         foreach($consumptions as $consumption){
+            Validation::validateConsumptionsUpdate($consumption, $request);
             $consumption_id = $consumption['consumption_id'];
             unset($consumption['consumption_id']);
 
-            Validation::validateConsumptionsUpdate($consumption, $request);
             //! we're sending the data body without the id, we only need the id to know which consumption[row] to update
             $this->consumption_model->updateConsumptions($consumption,$consumption_id);
         }
@@ -91,7 +90,6 @@ class ConsumptionController extends BaseController
         $consumptions = $request->getParsedBody();
 
         foreach ($consumptions as $consumption_id) {
-            // var_dump($consumption_id);
             Validation::validateConsumptionsDeletion($consumption_id, $request);
             $this->consumption_model->deleteConsumption($consumption_id);
         }

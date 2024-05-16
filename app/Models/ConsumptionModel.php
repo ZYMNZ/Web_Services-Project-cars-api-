@@ -58,7 +58,7 @@ class ConsumptionModel extends BaseModel
     public function deleteConsumption($consumption_id) : mixed {
         return $this->delete(
             "consumptions",
-            ["consumption_id" => $consumption_id]
+            $consumption_id
         );
     }
 }

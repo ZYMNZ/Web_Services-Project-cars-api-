@@ -249,6 +249,7 @@ public static function validateCarsDeletion(array $data, $request): void
 
 public static function validateConsumptionCreation(array $data, $request): void
 {
+    
     $validator = new Validator($data);
     $validator->rule('required', [
         'consumption_id',
@@ -274,35 +275,42 @@ public static function validateConsumptionCreation(array $data, $request): void
 
 public static function validateConsumptionsUpdate(array $data, $request): void
 {
-    $validator = new Validator($data);
-    $validator->rule('required', [
-        'consumption_id',
+
+    $validateExistence = new Validator($data);
+    $validateFields = new Validator($data);
+
+    $validateExistence->rule('required', 'consumption_id')->message('{field} is required')
+    ->rule('optional', [
         'engine_size',
         'fuel_consumption_city',
         'fuel_consumption_hwy',
         'fuel_consumption_combined',
-    ])->message('{field} is required')
+    ]);
+
+      $validateFields
       ->rule('integer', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'])->message('{field} must be an integer')
       ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"')
       ->rule('min', ['engine_size', 'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_combined'], '0')->message('{field} cannot be less than 0');
 
-    $validator->labels([
+        $labels = [
         'consumption_id' => 'Consumption ID',
         'engine_size' => 'Engine Size',
         'fuel_consumption_city' => 'Fuel Consumption City',
         'fuel_consumption_hwy' => 'Fuel Consumption Highway',
         'fuel_consumption_combined' => 'Fuel Consumption Combined'
-    ]);
+    ];
 
-    self::validate($validator, $request);
+    $validateExistence->labels($labels);
+    $validateFields->labels($labels);
+    
+    self::validate($validateExistence, $request);
+    self::validate($validateFields, $request);
 }
 
 public static function validateConsumptionsDeletion(array $data, $request): void
 {
     $validator = new Validator($data);
-    $validator->rule('required', 'consumption_id')->message('{field} is required')
-              ->rule('regex', 'consumption_id', '/^FC-\d{5}$/')->message('{field} must be in the format FC-XXXXX example:"FC-12345"');
-
+    $validator->rule('required', 'consumption_id')->message('{field} is required');
     $validator->labels([
         'consumption_id' => 'Consumption ID'
     ]);
@@ -312,30 +320,22 @@ public static function validateConsumptionsDeletion(array $data, $request): void
 
     public static function validateFuelExpense(array $data, $request): void
     {
-        $validateExistence = new Validator($data);
-        $validateFields = new Validator($data);
-
-        $validateExistence->rule('required', [
+        $validator = new Validator($data);
+        $validator->rule('required', [
             'annual_miles_driven',
             'miles_per_gallon',
             'price_per_gallon',
-        ])->message('{field} is required');
-
-            $validateFields->rule('regex', 'annual_miles_driven', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
+        ])->message('{field} is required')
+            ->rule('regex', 'annual_miles_driven', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
             ->rule('regex', 'miles_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
             ->rule('regex', 'price_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number');
 
-        $labels = [
+        $validator->labels([
             'annual_miles_driven' => 'Annual Miles Driven',
             'miles_per_gallon' => 'Miles Per Gallon',
             'price_per_gallon' => 'Price Per Gallon'
-        ];
-
-        $validateExistence->labels($labels);
-        $validateFields->labels($labels);
-
-        self::validate($validateExistence, $request);
-        self::validate($validateFields, $request);;
+        ]);
+        self::validate($validator, $request);
     }
 
 }
