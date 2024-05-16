@@ -312,22 +312,30 @@ public static function validateConsumptionsDeletion(array $data, $request): void
 
     public static function validateFuelExpense(array $data, $request): void
     {
-        $validator = new Validator($data);
-        $validator->rule('required', [
+        $validateExistence = new Validator($data);
+        $validateFields = new Validator($data);
+
+        $validateExistence->rule('required', [
             'annual_miles_driven',
             'miles_per_gallon',
             'price_per_gallon',
-        ])->message('{field} is required')
-            ->rule('regex', 'annual_miles_driven', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
+        ])->message('{field} is required');
+
+            $validateFields->rule('regex', 'annual_miles_driven', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
             ->rule('regex', 'miles_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number')
             ->rule('regex', 'price_per_gallon', "/^[0-9]+\.?[0-9]+$/")->message('{field} must be an number');
 
-        $validator->labels([
+        $labels = [
             'annual_miles_driven' => 'Annual Miles Driven',
             'miles_per_gallon' => 'Miles Per Gallon',
             'price_per_gallon' => 'Price Per Gallon'
-        ]);
-        self::validate($validator, $request);
+        ];
+
+        $validateExistence->labels($labels);
+        $validateFields->labels($labels);
+
+        self::validate($validateExistence, $request);
+        self::validate($validateFields, $request);;
     }
 
 }
