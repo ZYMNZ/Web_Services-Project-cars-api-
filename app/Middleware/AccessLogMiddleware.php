@@ -12,16 +12,9 @@ class AccessLogMiddleware extends LoggerHelper implements MiddlewareInterface
 {
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        //?2) we can now log some access info:
-        $client_ip = $_SERVER["REMOTE_ADDR"];
-        $method = $request->getMethod();
-        $uri = $request->getUri()->getPath();
-        $log_record = $client_ip. ' ' .$method. ' '. $uri;
-        //3) prepare extra info
-        $access_log = LoggerHelper::accessLogger();
-
-        $extras = $request->getQueryParams();
-        $access_log->info($log_record,$extras);
+        if (!str_contains($request->getUri(), "account") && !str_contains($request->getUri(), "token")) {
+            LoggerHelper::accessLogger($request);
+        }
         return $handler->handle($request);
     }
 }
