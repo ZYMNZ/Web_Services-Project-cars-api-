@@ -14,11 +14,11 @@ class AccessLogMiddleware extends LoggerHelper
         $access_log = LoggerHelper::accessLogger();
         $access_log->info(sprintf('%s %s',$request->getMethod(), $request->getUri()));
         $response = $handler->handle($request);
-        $access_log->info(sprintf(
-            '%d %s',
-            $response->getStatusCode(),
-            $response->getReasonPhrase(),
-        ));
+//        $access_log->info(sprintf(
+//            '%d %s',
+//            $response->getStatusCode(),
+//            $response->getReasonPhrase(),
+//        ));
         return $response;
     }
 }
