@@ -53,8 +53,8 @@ class JWTAuthMiddleware implements MiddlewareInterface
         $decoded = "";
 //        $access_logger = new Logger('access');
 //        $access_logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE, Logger::INFO));
-        $error_log = LoggerHelper::errorLogger();
-        $access_log = LoggerHelper::accessLogger();
+        $error_log = LoggerHelper::errorLogger($request);
+//        $access_log = LoggerHelper::accessLogger();
 //        $error_logger = new Logger('error');
 //        $error_logger->pushHandler(new StreamHandler(APP_LOGS_DIR.APP_ERROR_LOGS_FILE, Logger::ERROR));
         try {
