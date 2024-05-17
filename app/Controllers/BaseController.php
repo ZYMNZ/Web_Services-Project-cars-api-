@@ -6,7 +6,6 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
-use Vanier\Api\Helpers\LoggerHelper;
 
 abstract class BaseController
 {
@@ -29,8 +28,6 @@ abstract class BaseController
     protected function assertIdFormat($request, $id, $pattern): void
     {
         if (preg_match($pattern, $id) === 0) {
-//            $error_log = LoggerHelper::errorLogger();
-//            $error_log->error("Unable to process the request: invalid $this->resource_name id format");
             throw new HttpInvalidInputException(
                 $request,
                 "Unable to process the request: invalid $this->resource_name id format"
@@ -40,8 +37,6 @@ abstract class BaseController
     protected function assertIdExists($request, $data): void
     {
         if (!$data[$this->resource_name]) {
-//            $error_log = LoggerHelper::errorLogger();
-//            $error_log->error("The supplied $this->resource_name id is not valid!");
             throw new HttpInvalidInputException(
                 $request,
                 "The supplied $this->resource_name id is not valid!"
