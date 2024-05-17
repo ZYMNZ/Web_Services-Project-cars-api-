@@ -3,6 +3,7 @@
 namespace Vanier\Api\Validations;
 
 use Vanier\Api\Exceptions\HttpInvalidInputException;
+use Vanier\Api\Helpers\LoggerHelper;
 use Vanier\Api\Helpers\Validator;
 
 class OwnerValidation extends BaseValidation

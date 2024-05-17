@@ -3,6 +3,7 @@
 namespace Vanier\Api\Validations;
 
 use Vanier\Api\Exceptions\HttpInvalidInputException;
+use Vanier\Api\Helpers\LoggerHelper;
 
 class BaseValidation
 {
@@ -13,6 +14,8 @@ class BaseValidation
             if (str_contains($message, '  ')) {
                 $message = str_replace('  ', ' ', $message);
             }
+            $error_log = LoggerHelper::errorLogger();
+            $error_log->error($message);
             throw new HttpInvalidInputException(
                 $request,
                 $message

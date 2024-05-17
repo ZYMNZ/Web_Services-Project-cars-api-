@@ -7,7 +7,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Vanier\Api\Helpers\LoggerHelper;
-use Vanier\Api\Models\AccessLogModel;
 
 class AccessLogMiddleware extends LoggerHelper implements MiddlewareInterface
 {
