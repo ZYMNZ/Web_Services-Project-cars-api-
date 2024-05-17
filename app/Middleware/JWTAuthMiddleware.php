@@ -105,14 +105,7 @@ class JWTAuthMiddleware implements MiddlewareInterface
         //? Step1) instantiate and configure a logger.
 //        var_dump(APP_LOGS_DIR.APP_ACCESS_LOGS_FILE);
 
-        //?2) we can now log some access info:
-        $client_ip = $_SERVER["REMOTE_ADDR"];
-        $method = $request->getMethod();
-        $uri = $request->getUri()->getPath();
-        $log_record = $client_ip. ' ' .$method. ' '. $uri;
-        //3) prepare extra info
-        $extras = $request->getQueryParams();
-        $access_log->info($log_record,$extras);
+
         $access_log_model = new AccessLogModel();
         $access_log_model->createLogEntry($decoded, $route);
 

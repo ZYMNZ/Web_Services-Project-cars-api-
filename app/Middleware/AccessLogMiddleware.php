@@ -4,21 +4,25 @@ namespace Vanier\Api\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Vanier\Api\Helpers\LoggerHelper;
+use Vanier\Api\Models\AccessLogModel;
 
-class AccessLogMiddleware extends LoggerHelper
+class AccessLogMiddleware extends LoggerHelper implements MiddlewareInterface
 {
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
+        //?2) we can now log some access info:
+        $client_ip = $_SERVER["REMOTE_ADDR"];
+        $method = $request->getMethod();
+        $uri = $request->getUri()->getPath();
+        $log_record = $client_ip. ' ' .$method. ' '. $uri;
+        //3) prepare extra info
         $access_log = LoggerHelper::accessLogger();
-        $access_log->info(sprintf('%s %s',$request->getMethod(), $request->getUri()));
-        $response = $handler->handle($request);
-//        $access_log->info(sprintf(
-//            '%d %s',
-//            $response->getStatusCode(),
-//            $response->getReasonPhrase(),
-//        ));
-        return $response;
+
+        $extras = $request->getQueryParams();
+        $access_log->info($log_record,$extras);
+        return $handler->handle($request);
     }
 }
