@@ -106,7 +106,7 @@ class Validation
             if (str_contains($message, '  ')) {
                 $message = str_replace('  ', ' ', $message);
             }
-            $error_log = LoggerHelper::errorLogger();
+            $error_log = LoggerHelper::errorLogger($request);
             $error_log->error($message);
             throw new HttpInvalidInputException(
                 $request,
