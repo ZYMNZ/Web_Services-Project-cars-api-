@@ -44,7 +44,7 @@ $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON
 
 //TODO: change the name of the subdirectory here.
 // You also need to change it in .htaccess
-$app->setBasePath("/cars-api");
+$app->setBasePath("/cars-api/v2");
 
 // Include the file that contains the application routes. 
 //* NOTE: your routes must be managed in the api_routes.php file.
