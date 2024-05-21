@@ -13,6 +13,7 @@ class AboutController extends BaseController
     {
         $data = array(
             'about' => 'Welcome! This is a Web service that provides JSON format data about cars, emissions, consumptions, deals, owners, insurances, users, violations, and violations_cars!',
+            "version": "1",
             'resources' => [
                 'Cars' => [
                     [
