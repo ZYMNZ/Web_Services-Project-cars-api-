@@ -119,7 +119,7 @@ class AccountsController extends BaseController
         ];
 
         // Current time stamp * 60 seconds
-        $expires_in = time() + 100000000000; //! NOTE: Expires in 1 minute.
+        $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         //$jwt = JWTManager::generateJWT($account_data, $expires_in);
