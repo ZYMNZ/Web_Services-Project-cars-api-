@@ -14,7 +14,7 @@ This repository contains an application skeleton for creating REST-based Web ser
 
 Follow the instructions below in the specified order:
 
-1. Download this repository as `.zip` file.
+1. Download **_v1_** or **_v2_** folder as `.zip`.
 2. Extract the downloaded `slim-template-main.zip` file locally.
 3. Copy the `slim-template-main` folder into your Web server's **document root** (that is, `htdocs`)
 4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `worldcup-api`
